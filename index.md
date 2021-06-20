@@ -1,5 +1,8 @@
+<link rel="shortcut icon" type="image/png" href="favicon.ico">
 ## <img src="./logo.png" width="60px"/> HandyProps
 ### Ferramenta Livre para Seleção de Materiais.
+
+[Acesse aqui o HandyProps](https://demo.handyprops.damasceno.pro)
 
 O HandyProps é uma aplicação Web voltada para a Seleção de Materiais de Engenharia, a partir de bases de dados compilada comunitáriamente.
 
