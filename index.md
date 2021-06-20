@@ -1,37 +1,34 @@
-## Welcome to GitHub Pages
+## <img src="./logo.png" width="60px"/> HandyProps
+### Ferramenta Livre para Seleção de Materiais.
 
-You can use the [editor on GitHub](https://github.com/thubaidamasceno/HandyProps/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+O HandyProps é uma aplicação Web voltada para a Seleção de Materiais de Engenharia, a partir de bases de dados compilada comunitáriamente.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+O HandyProps foi idealizado com inspiração na metodologia de seleção de materiais de Michael Ashby, na qual a capacidade de traçar de gráficos avançados torna-se importante e interessante. 
 
-### Markdown
+Um software comercial que atende à essa metodologia é o CES EduPack, desenvolvido pela GrantaDesign para desktops Windows. Com o HandyProps, a capacidade de realizar as análises e seleção de materiais em um navegador Web utilizando uma plataforma de código aberto moderniza, flexibililiza e democratiza a prática da seleção de materiais.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Funcionalidades Disponíveis
 
-```markdown
-Syntax highlighted code block
+- Carregamento de Bases de Dados (sinônimo de Bancos de Dados) utilizando apenas o endereço web de um arquivo ```*.json```. 
+- Plotagem de 'Gráficos de Ashby' com base em parâmetros fornecidos pelo usuário
 
-# Header 1
-## Header 2
-### Header 3
+### Funcionalidades Pendentes Implantação
 
-- Bulleted
-- List
+1. Armazenamento on-line de dados de usuários. Será ótimo, pois vai permitir o compartilhamento de fórmulas, filtros e gráficos entre os usuários.
+2. Edição das Bases de Dados de materiais através do aplicativo. Atualmente as Bases de Dados devem ser geradas em um arquivo ```*.json```, uma das formas fáceis de fazer isso é usando Excel, outras formas seriam através de JavaScript ou Python. A edição via aplicativo estimulará a colaboratividade, mas exige um bom controle da versão das mudanças e exatidão das informações.  
 
-1. Numbered
-2. List
+### Licenciamento GPL v3.0
 
-**Bold** and _Italic_ and `Code` text
+O licenciamento GPL (GNU GENERAL PUBLIC LICENSE) em sua versão 3.0 é um dos mais comuns para softwares livres (tais como várias distrinbuições Linux e seus aplicativos), e visa garantir as seguintes liberdades:
+* a liberdade de usar o software para qualquer finalidade,
+* a liberdade de mudar o software de acordo com suas necessidades,
+* a liberdade de compartilhar o software com seus amigos e vizinhos e
+* a liberdade de compartilhar as mudanças que você faz.
 
-[Link](url) and ![Image](src)
-```
+Mais detalhes sobre o licenciamento GPL podem ser encontrados  em [https://www.gnu.org/licenses/gpl-3.0.html](https://www.gnu.org/licenses/gpl-3.0.html).
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Apesar dessse licenciamento livre, o HandyProps tem sua versão 'oficial' registrada no INPI (Instituto Nacional de Propriedade Industrial), o que assegura que apesar das liberdades concedidas acima, a autoria do software é reservada por Thubaí Damasceno.
 
-### Jekyll Themes
+### Contato com o Desenvolvedor
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/thubaidamasceno/HandyProps/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+O HandyProps foi desenvolvido por [Thubaí Damasceno](https://damasceno.pro), Engenheiro Mecânico em formação pela [UFS (Universidade Federal de Sergipe)](https://www.ufs.br).
