@@ -1,0 +1,622 @@
+.imgcam {
+    /* min-width: 80%; */
+    /* min-height: 80%; */
+    /* height: 80%; */
+    /* background-color: gray; */
+    max-width: 95%;
+    max-height: 95vh;
+    height: auto;
+    border-radius: 10px;
+}
+
+.imgcambox {
+    align-self: center;
+    text-align: center;
+    align-content: center;
+}
+
+.nobullet {
+    display: inline-block;
+    margin: 0 auto;
+    border: 0 auto;
+    padding-left: 0;
+    list-style-type: none;
+    text-align: right;
+}
+.nobullet li{
+    float: left;
+    vertical-align: bottom;
+}
+.li1 {
+    display: block;
+    text-align: left;
+}
+
+img.logoimg {
+    height: 36px;
+    margin: 5px;
+    /* display: none; */
+}
+
+.headerbar {
+    flex-wrap: nowrap !important;
+    display: flex;
+    /* align-items: center; */
+    /* width: 100%; */
+}
+
+.headerbar2 {
+    flex-wrap: nowrap !important;
+    display: flex;
+    flex-direction: row-reverse;
+    /*align-items: right;*/
+    /* width: 100%; */
+}
+
+.navbar-naver {
+    flex-wrap: nowrap !important;
+    display: flex;
+    justify-content: right;
+    flex-direction: row-reverse;
+}
+
+input:read-only {
+  background-color: beige;
+}
+
+img.handypropslogo {
+    height: 20px;
+    /* margin-top: 5px; */
+    /* margin-right: 2em; */
+    margin: 1em;
+}
+
+p.card-text {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+    z-index: 2000;
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    /* overflow: hidden; */
+    display: inline-flex;
+    margin: 0;
+}
+
+.upload-btn-wrapper {
+    /* position: relative; */
+    /* overflow: hidden; */
+    /* display: inline-block; */
+    /* display: inline-flex; */
+    align-content: center;
+    align-items: center;
+    padding: 0px 5px;
+}
+
+.btn-upload {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 0px 4px;
+}
+
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.d-inline-flex {
+    display: inline-flex !important;
+}
+
+
+.upload-progress-wrapper {
+    border: 2px solid gray;
+    color: gray;
+    background-color: blue;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+}
+.upload-progresserror-wrapper{
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    color: red;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+svg.rc-progress-circle {
+    /* border: 2px solid gray; */
+    color: gray;
+    /* background-color: #dc6565; */
+    /* padding: 20px; */
+    /* border-radius: 8px; */
+    /* font-size: 20px; */
+    /* font-weight: bold; */
+    width: 36px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.cordova-camera-capture {}
+
+video {
+    width: 80%;
+    height: 80%;
+}
+
+.cam-camerabox {
+    display: inline-flex;
+}
+
+.imgcam-btn-cancel {
+    /* float: right; */
+    /* top: 50px; */
+    /* right: 50px; */
+    /* position: fixed!important; */
+    /* justify-self: flex-end; */
+    /* display: block; */
+}
+
+img#myImage {}
+
+.ReactModal {
+    /* display: flex; */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+}
+
+.cam-cordovabox {
+    display: inline-flex;
+}
+
+.imgcam-btn-box {
+    position: fixed;
+    top: 15%;
+    right: 3%;
+    bottom: 15%;
+    display: flex;
+    justify-content: space-around;
+    background: rgb(0 0 0 / 0.5);
+    padding: 12px;
+    border-radius: 50px;
+    flex-flow: column;
+}
+
+.ReactModal__Overlay {
+    background-color: transparent!important;
+}
+
+.btn-upload-disabled {
+    color: rgba(10, 10, 10, 0.2)!important;
+}
+
+.btn-upload-disabled:hover {
+    text-decoration: none;
+    background-color: rgb(224, 224, 224)!important;
+    cursor: auto;
+}
+
+input#myfile {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+img.oserv-imgthumb {
+    max-width: 100px;
+    border-radius: 5px;
+}
+
+img.oserv-attachicon {
+    width: 48px;
+    padding: 4px;
+    margin: 12px;
+}
+
+.react-viewer-close.react-viewer-btn {
+    z-index: 2500!important;
+}
+
+.rst__moveHandle {}
+
+
+.Resizer {
+  background: #000;
+  opacity: 0.2;
+  z-index: 1;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+}
+ 
+.Resizer:hover {
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
+}
+ 
+.Resizer.horizontal {
+  height: 11px;
+  margin: -5px 0;
+  border-top: 5px solid rgba(255, 255, 255, 0);
+  border-bottom: 5px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+  width: 100%;
+}
+ 
+.Resizer.horizontal:hover {
+  border-top: 5px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+}
+ 
+.Resizer.vertical {
+  width: 11px;
+  margin: 0 -5px;
+  border-left: 5px solid rgba(255, 255, 255, 0);
+  border-right: 5px solid rgba(255, 255, 255, 0);
+  cursor: col-resize;
+}
+ 
+.Resizer.vertical:hover {
+  border-left: 5px solid rgba(0, 0, 0, 0.5);
+  border-right: 5px solid rgba(0, 0, 0, 0.5);
+}
+.Resizer.disabled {
+  cursor: not-allowed;
+}
+.Resizer.disabled:hover {
+  border-color: transparent;
+}
+.link {
+    background-color: transparent;
+    border: 0;
+    color: #00f;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+    position: relative;
+    text-decoration: underline;
+}
+
+
+li.pedido-listitem {
+    list-style: none;
+}
+
+li.pedido-listitem.pedido-items-row {
+    list-style: decimal;
+    display: flex;
+    border-bottom: 0.3px dotted black;
+    overflow-wrap: break-word;
+}
+
+div.pedido-listitem.pedido-nped {
+    font-weight: bold;
+    font-size: large;
+}
+
+.pedido-box {
+    border: lightgray solid 1px;
+    margin: 4px;
+    display: flex;
+    /* width: 80%; */
+    padding: 1px;
+    border-radius: 4px;
+    /* flex-direction: column; */
+    margin-bottom: 1em;
+}
+
+.pedido-row {
+    border: 2px red;
+    background-color: lightcyan;
+    /* display: inline-flex; */
+    width: 100%;
+    padding: 4px;
+}
+
+span.pedido-listitem.pedido-item-obs {
+    font-style: italic;
+    font-size: small;
+    background-color: #90ee90bd;
+}
+
+input.nav-link-omnibox {
+    color: black;
+    font-size: large;
+    width: 10em;
+}
+
+.pedido-listitem.divcriarop {
+    display: flex;
+    width: 100px;
+    /* overflow-wrap: break-word; */
+    /* flex-flow: wrap; */
+}
+
+.nav-link-omnibox {
+    display: flex;
+    align-content: center;
+}
+
+.orprodcria-pagetitle {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.orprodcria-fieldrow {
+    display: inline-flex;
+    /* flex-flow: column; */
+}
+
+.orprodcria-fieldtable {
+    display: flex;
+    flex-flow: column;
+}
+
+.orprodcria-fieldtitle {
+    font-weight: bold;
+}
+
+div.pedido-listitem.pedido-cliname {
+    font-size: large;
+}
+
+.nav-link-omnibox .MuiSvgIcon-root {
+    /* width: 1.5em; */
+    height: auto;
+    /* background-color: yellow; */
+    /* color: blue; */
+    border-radius: 1.5em;
+    /* margin-right: 1em; */
+}
+
+.nav-link-omnibox .MuiSvgIcon-root:hover {
+    background-color: #b6f5a7;
+    color: blue;
+}
+
+span.pedido-listitem.pedido-item-qtd {
+    background-color: lightyellow;
+    /* padding: 4px; */
+}
+
+ul.pedido-lista {
+    padding-inline-start: 0;
+}
+
+ul.pedido-listitem.pedido-items-box {
+    padding-inline-start: 0;
+}
+
+div.pedido-listitem.pedido-item-opinfo {
+    font-weight: bold;
+}
+
+span.pedido-listitem-opfield {
+    font-weight: 900;
+    justify-self: center;
+    align-content: center;
+    vertical-align: middle;
+    justify-items: center;
+}
+
+button.pedido-listitem-criarbtn {
+    background-color: orange;
+    font-weight: bolder;
+    border: 1px solid;
+    border-radius: 10px;
+    height: min-content;
+}
+
+.orprodcria-fieldrow2 .orprodcria-fieldcont {
+    border: 1px solid;
+    padding: 2px;
+}
+
+.orprodcria-fieldcont-divoptop {
+    border: 1px solid;
+    margin: 5px;
+    padding: 5px;
+}
+
+
+.orprodcria-fieldcont-divchkstq {
+    border: 1px solid;
+    margin: 5px;
+    padding: 5px;
+}
+
+.orprodcria-fieldrow2 {
+    margin: 5px;
+}
+
+button.pedido-listitem-reservarbtn {
+    height: min-content;
+}
+
+.pedido-listitem.divitemdesc {
+    width: fit-content;
+}
+
+.pedido-listitem.pedido-cabec {
+    display: flex;
+    /* width: 100px; */
+}
+
+.pedido-listitem.pedido-title {
+    width: 80px;
+    overflow-wrap: break-word;
+    margin-right: 15px;
+}
+
+path {}
+
+.MuiFormControl-root.MuiTextField-root.oserv-form-control {}
+
+.orprodcria-itens {
+    /* border: 1px solid; */
+    border: 1px solid;
+    margin: 5px;
+    padding: 5px;
+}
+
+.orprodcria-custo.final {
+    /* border: 1px solid; */
+    border: 1px solid;
+    margin: 5px;
+    padding: 5px;
+}
+
+div {}
+
+div.orprodcria-itens div {
+    display: flex;
+}
+
+ul.pagination {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.pagination li{
+    display: inline-block;
+    margin: 1px;
+    /* font-weight: bolder; */
+    /* color: white; */
+    /* background-color: blue; */
+    padding: 7px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+}
+
+li.active{
+  font-weight:bolder;
+  color:white;
+  background-color:blue;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+.pedido__header.--top {
+    display: flex;
+}
+
+.paginationCnt {
+    flex-direction: row-reverse;
+    width: 100%;
+    display: inline-flex;
+}
+
+.pagination li:hover {
+    /* font-weight: bolder; */
+    color: black;
+    background-color: lightcyan;
+    /* padding: 7px; */
+    /* border-radius: 10px; */
+    border: 1px solid black;
+}
+
+li.active:hover {
+    color: white;
+    background-color: blue;
+}
+
+textarea.orprodcria-fieldcont {
+    width: 100%;
+}
+
+.custosmp-cnt {
+    flex-flow: column;
+}
+
+input.some {
+    /* height: fit-content; */
+    width: 8em;
+}
+
+input.some {}
+
+.nav-link-omnibox-dirty {
+    background-color: gold;
+}
+
+.pagination a {
+    padding: 7px;
+}
+
+span.pedido-listitem-openop {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+main.container-fluid {
+    background-color: yellow;
+}
+
+main > .container-fluid {
+    /* background-color: lightblue; */
+    /* height: 700px; */
+    /* min-height: 500px; */
+    height: calc(100% - 30px);
+    /* bottom: 10px; */
+}
+
+main > .container-fluid > .row {
+    width: 100%;
+    height: 100%;
+}
+
+div#root {
+    height: 100%;
+}
+
+#root > div {
+    height: 100%;
+}

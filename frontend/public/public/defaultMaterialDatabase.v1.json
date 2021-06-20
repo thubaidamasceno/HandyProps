@@ -1,0 +1,11 @@
+[
+  {
+    "name":"default",
+    "description":"Default Materials Properties Database",
+    "dataSourceName":"materials",
+    "URLs":[
+      "https://demo.handyprops.damasceno.pro/public/defaultMaterialDatabase.json",
+      "/public/defaultMaterialDatabase.json"
+    ]
+  }
+]

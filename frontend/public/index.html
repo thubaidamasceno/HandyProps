@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <script>
+        window.lastkey = 0;
+        const keygen = () => {
+            return window.lastkey++
+        };
+        window.keygen = keygen;
+    </script>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta http-equiv="Content-Security-Policy" content="
+default-src * http: https: 'self' data: 'unsafe-eval' 'unsafe-inline' gap:;
+connect-src * http: https: 'unsafe-eval' 'unsafe-inline';
+style-src  * 'self' 'unsafe-inline';
+media-src * http: https: 'unsafe-eval' 'unsafe-inline' 'self' data: content:;
+script-src * 'unsafe-inline' 'unsafe-eval';
+img-src * http: https: 'unsafe-eval' 'unsafe-inline' 'self' data: content:  blob: android-webview-video-poster:; ">
+    <meta name="referrer" content="unsafe-url">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="%PUBLIC_URL%/main.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/bootstrap.css" type="text/css">
+    <link href="%PUBLIC_URL%/css2.css" rel="stylesheet" type="text/css">
+    <link href="%PUBLIC_URL%/manutensis.css" rel="stylesheet" type="text/css">
+    <link id="page-stylesheet" rel="stylesheet" href="gray.css"/>
+    <link id="page-stylesheet" rel="stylesheet" href="%PUBLIC_URL%/gray.css"/>
+    <link id="page-stylesheet" rel="stylesheet" href="%PUBLIC_URL%/gray2.css"/>
+
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png"/>
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
+    <title>HandyProps</title>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
