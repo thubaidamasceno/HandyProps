@@ -46,6 +46,7 @@ function DataSource() {
     // const clicks = useSelector(state => op.get(state, `handyProps.clicks`));
     const dispatch = useDispatch();
     const processing = useSelector(state => op.get(state, `handyProps.processing`));
+    const data = useSelector(state => op.get(state, `handyProps.data`));
     const loaded = useSelector(state => op.get(state, `handyProps.loaded`));
     const urlDSListDefault = useSelector(state => op.get(state, `handyProps.DS.urlDSListDefault`));
     const urlDSListState = useSelector(state => op.get(state, `handyProps.DS.urlDSList`));
@@ -85,79 +86,76 @@ function DataSource() {
                                 }}/></div>
                     {urlDSList !== urlDSListState ? <div>
                         <Link
-                            href='javascript:;'
-                            className={[classes.buttonLink,]}
+                            href=''
+                            className={classes.buttonLink}
                             onClick={() => setUrlDSList(urlDSListState)}
                         >Cancelar</Link>
-                        <Link href='javascript:;'
+                        <Link href=''
                               onClick={() => dispatch({type: act.hpSetState, toSet: {DS: {urlDSList}}})}
-                              className={[classes.buttonLink]}>Salvar</Link>
+                              className={classes.buttonLink}>Salvar</Link>
                     </div> : <div>
                         <Link
-                            href='javascript:;'
-                            className={[
-                                classes.buttonLink,
-                                // classes.enabled,
-                            ]}
+                            href=''
+                            className={classes.buttonLink}
                             onClick={() => reset()}
                             hidden={urlDSListDefault === urlDSList}
                         >Restaurar Padrão</Link>
                         <Link
-                            href='javascript:;'
-                            //onClick={() => setUrlDSList(urlDSListState)}
+                            href=''
+                            onClick={() => dispatch({
+                                type: act.hp.getDataSource,
+                                url: urlDSListState,
+                            })}
+                            disabled={processing}
                             className={classes.buttonLink}
                         >Atualizar</Link>
                     </div>}
 
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                >
-                    <Typography className={classes.heading}>Bases Encontradas</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <>
-                        {loaded && <>
-                            <button
-                                onClick={() => dispatch({type: act.hp.loadData})}
-                                disabled={processing}
-                            >Carregar Base de Dados
-                            </button>
-                        </>}
-                        {processing && <><p/><CircularProgress
-                            size={20}
-                        /></>}
-                    </>
-                </AccordionDetails>
-            </Accordion>
+            {/*<Accordion>*/}
+            {/*    <AccordionSummary*/}
+            {/*        expandIcon={<ExpandMoreIcon/>}*/}
+            {/*        aria-controls="panel2a-content"*/}
+            {/*        id="panel2a-header"*/}
+            {/*    >*/}
+            {/*        <Typography className={classes.heading}>Bases Encontradas</Typography>*/}
+            {/*    </AccordionSummary>*/}
+            {/*    <AccordionDetails>*/}
+            {/*        <>*/}
+            {/*            {loaded && <>*/}
+            {/*                <button*/}
+            {/*                    onClick={() => dispatch({type: act.hp.loadData})}*/}
+            {/*                    disabled={processing}*/}
+            {/*                >Carregar Base de Dados*/}
+            {/*                </button>*/}
+            {/*            </>}*/}
+            {/*            {processing && <><p/><CircularProgress*/}
+            {/*                size={20}*/}
+            {/*            /></>}*/}
+            {/*        </>*/}
+            {/*    </AccordionDetails>*/}
+            {/*</Accordion>*/}
             <Accordion defaultExpanded={true}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
-                    <Typography className={classes.heading}>Bases Instaladas</Typography>
+                    <Typography className={classes.heading}>Informação</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    xx
+                    <>
+                        <center> {loaded ? <>
+                            {`${data.length} materiais carregados`}
+                        </> : "Não Há Dados Carregados"}</center>
+                        {processing && <><p/><CircularProgress
+                            size={20}
+                        /></>}
+                    </>
                 </AccordionDetails>
             </Accordion>
-            {/*<>*/}
-            {/*    {loaded && <>*/}
-            {/*        <button*/}
-            {/*            onClick={() => dispatch({type: act.hp.loadData})}*/}
-            {/*            disabled={processing}*/}
-            {/*        >Carregar Base de Dados*/}
-            {/*        </button>*/}
-            {/*    </>}*/}
-            {/*    {processing && <><p/><CircularProgress*/}
-            {/*        size={20}*/}
-            {/*    /></>}*/}
-            {/*</>*/}
+
         </div>
     );
 }

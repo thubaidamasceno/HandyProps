@@ -608,7 +608,7 @@ main > .container-fluid {
     /* bottom: 10px; */
 }
 
-main > .container-fluid > .row {
+/* main > .container-fluid > .row {
     width: 100%;
     height: 100%;
 }
@@ -619,4 +619,4 @@ div#root {
 
 #root > div {
     height: 100%;
-}
+} */

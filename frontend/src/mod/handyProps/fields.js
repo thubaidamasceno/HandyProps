@@ -7,7 +7,7 @@
 //     n
 // };
 
-export default {
+const fields =  {
     ClassAllBulk: {},
     ClassAll: {},
     ClassCeramic: {},
@@ -90,3 +90,4 @@ export default {
     ImpactStrength23Delta: {},
     MeltTemperatureDelta: {},
 };
+export default fields;

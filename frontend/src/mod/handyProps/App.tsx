@@ -1,10 +1,10 @@
 import {Layout, Model, TabNode, IJsonModel} from 'flexlayout-react';
 import './App.css';
 // import 'flexlayout-react/style/light.css';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import * as op from "object-path";
-import {apiActs} from "./reducers";
+// import {apiActs} from "./reducers";
 
 import {act} from './modconf'
 
@@ -110,15 +110,15 @@ function App() {
 
     const data = useSelector(state => op.get(state, `handyProps.data`));
     // const clicks = useSelector(state => op.get(state, `handyProps.clicks`));
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     let p = {
-    //         type: act.HP_LOADED,
-    //         //payload: apiActs.list({}),
-    //     };
-    //     dispatch(p);
-    // }, []);
+    useEffect(() => {
+        let p = {
+            type: act.HP_LOADED,
+            //payload: apiActs.list({}),
+        };
+        dispatch(p);
+    }, [dispatch]);
 
     const factory = (node: TabNode) => {
         var component = node.getComponent();

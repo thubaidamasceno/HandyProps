@@ -56,7 +56,7 @@ function* loadData(action) {
             type: act.hpSetState, toSet: {
                 processing: false,
                 loaded: true,
-                dataSize: data && data.length || 0,
+                dataSize: (data && data.length) || 0,
                 data
             }
         });
@@ -71,33 +71,33 @@ function* loadData(action) {
     }
 }
 
-// Careerga lista de DS
-function* loadDataSources(action) {
-    try {
-        yield put({
-            type: act.hpSetState, toSet: {
-                processing: true,
-            }
-        });
-        const data = yield call(db.listMaterials(), data => data);
-        yield put({
-            type: act.hpSetState, toSet: {
-                processing: false,
-                loaded: true,
-                dataSize: data && data.length || 0,
-                data
-            }
-        });
-    } catch (e) {
-        yield put({type: "USER_FETCH_FAILED", message: e.message});
-        yield put({
-            type: act.hpSetState, toSet: {
-                processing: true,
-                dataSize: 0, data: []
-            }
-        });
-    }
-}
+// // Carerega lista de DS
+// function* loadDataSources(action) {
+//     try {
+//         yield put({
+//             type: act.hpSetState, toSet: {
+//                 processing: true,
+//             }
+//         });
+//         const data = yield call(db.listMaterials(), data => data);
+//         yield put({
+//             type: act.hpSetState, toSet: {
+//                 processing: false,
+//                 loaded: true,
+//                 dataSize: data && data.length || 0,
+//                 data
+//             }
+//         });
+//     } catch (e) {
+//         yield put({type: "USER_FETCH_FAILED", message: e.message});
+//         yield put({
+//             type: act.hpSetState, toSet: {
+//                 processing: true,
+//                 dataSize: 0, data: []
+//             }
+//         });
+//     }
+// }
 
 // Careerga DS espcífica, via lista de URLs
 function* getDataSource(action) {
@@ -107,14 +107,14 @@ function* getDataSource(action) {
                 processing: true,
             }
         });
-        const {dataSourceName, urls} = action.name;
+        const urls = [action.url];
 
         for (let k in urls) {
             const RemoteData = yield call(apiActs.get, {url: urls[k]});
             const sucess = yield call(
                 db.loadMaterials(),
                 {
-                    dataSourceName,
+                    dataSourceName: 'materials',
                     data: RemoteData,
                 }
             );
@@ -127,12 +127,30 @@ function* getDataSource(action) {
 
             }
         }
-        throw 'erro';
+        throw Error('erro');
     } catch (e) {
         yield put({type: "USER_FETCH_FAILED", message: e.message});
         yield put({
             type: act.hpSetState, toSet: {
-                processing: true, data: []
+                processing: true,
+                loaded: true,
+                data: [],
+            }
+        });
+    }
+}
+
+// Careerga DS espcífica, via lista de URLs
+function* HP_LOADED(action) {
+    try {
+        yield put({
+            type: act.hp.loadData
+        });
+    } catch (e) {
+        yield put({type: "USER_FETCH_FAILED", message: e.message});
+        yield put({
+            type: act.hpSetState, toSet: {
+                processing: false, data: []
             }
         });
     }
@@ -142,8 +160,14 @@ export const sagas = [
     (function* () {
         yield takeEvery(act.hp.loadData, loadData);
     })(),
+    // (function* () {
+    //     yield takeEvery(act.hp.loadDataSources, loadDataSources);
+    // })(),
     (function* () {
-        yield takeEvery(act.hp.loadDataSources, loadDataSources);
+        yield takeEvery(act.hp.getDataSource, getDataSource);
+    })(),
+    (function* () {
+        yield takeEvery(act.HP_LOADED, HP_LOADED);
     })(),
 ];
 
@@ -154,6 +178,11 @@ const toSetTraps = ({state, action}) => {
         db.setHandyPropsDataSource(handyPropsDataSource);
     }
 
+    let data = op.get(action.toSet, 'data')
+    if (data) {
+        state = im.set(state, 'chartData', data.map(m => ({x: m.Density, y: m.TensileStrength})));
+    }
+
     //
     return im.merge(state, '', op.get(action, 'toSet', {}));
 }
@@ -161,11 +190,11 @@ const toSetTraps = ({state, action}) => {
 const reducerBase = (state = defaultState, action) => {
     let v = {};
     switch (action.type) {
-        case   act.HP_LOADED:
-            return {
-                ...state,
-                data: op.get(action.payload, 'data', []),
-            };
+        // case   act.HP_LOADED:
+        //     return {
+        //         ...state,
+        //         // data: db.get,
+        //     };
         case   act.hpSetState:
             return toSetTraps({state, action});
         case   act.hp.setProcessing:
@@ -217,7 +246,8 @@ const reducerBase = (state = defaultState, action) => {
 const Reducers1 = produce((draft, action) => {
         switch (action.type) {
             case act.HP_ACT:
-                let act = action.p ? action.p.act : '', v = {};
+                let v = {};
+                v.act = action.p ? action.p.act : '';
                 switch (act) {
                     case 'restoreCrumb':
                         // v.viewKey = im.get(action, 'p.viewKey');
@@ -245,8 +275,10 @@ const Reducers1 = produce((draft, action) => {
                         // window.alert(`ação desconhecida ${act}`);
                         return draft;
                 }
+            default:
+                // window.alert(`ação desconhecida ${act}`);
+                return draft;
         }
-        return draft;
     },
     defaultState
     )
@@ -259,4 +291,5 @@ export const handyProps = reduceReducers(defaultState,
     },
     Reducers1,
 );
-export default {sagas, reducer: handyProps, commonReducer: handyPropsCommon};
+const reducers = {sagas, reducer: handyProps, commonReducer: handyPropsCommon}
+export default reducers;
