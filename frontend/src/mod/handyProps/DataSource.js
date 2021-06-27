@@ -10,7 +10,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {Link} from "@material-ui/core";
+import {Link,Button} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
         root: {
@@ -100,15 +100,14 @@ function DataSource() {
                             onClick={() => reset()}
                             hidden={urlDSListDefault === urlDSList}
                         >Restaurar Padrão</Link>
-                        <Link
-                            href=''
+                        <Button
                             onClick={() => dispatch({
                                 type: act.hp.getDataSource,
                                 url: urlDSListState,
                             })}
                             disabled={processing}
                             className={classes.buttonLink}
-                        >Atualizar</Link>
+                        >Atualizar</Button>
                     </div>}
 
                 </AccordionDetails>

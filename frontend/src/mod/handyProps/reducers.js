@@ -1,7 +1,7 @@
 import produce from "immer"
 import {ASYNC_START} from '../../constants/actionTypes';
 import reduceReducers from 'reduce-reducers';
-import {rh, rt} from "../../agent";
+import agent, {rh, rt} from "../../agent";
 import {act} from './modconf';
 import * as op from 'object-path';
 import * as im from 'object-path-immutable';
@@ -107,27 +107,20 @@ function* getDataSource(action) {
                 processing: true,
             }
         });
-        const urls = [action.url];
-
-        for (let k in urls) {
-            const RemoteData = yield call(apiActs.get, {url: urls[k]});
-            const sucess = yield call(
-                db.loadMaterials(),
-                {
-                    dataSourceName: 'materials',
-                    data: RemoteData,
-                }
-            );
-            if (sucess) {
-                yield put({
-                    type: act.hp.loadDataSources
-                });
-                return;
-            } else {
-
+        const RemoteData = yield call(apiActs.get, {url: action.url});
+        const sucess = yield call(
+            db.loadMaterials,
+            {
+                dataSourceName: 'materials',
+                data: RemoteData,
             }
+        );
+        if (sucess) {
+            yield put({
+                type: act.hp.loadDataSources
+            });
+            return;
         }
-        throw Error('erro');
     } catch (e) {
         yield put({type: "USER_FETCH_FAILED", message: e.message});
         yield put({
