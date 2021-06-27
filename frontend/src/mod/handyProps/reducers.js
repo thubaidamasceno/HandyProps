@@ -173,7 +173,7 @@ export const sagas = [
 
 const toSetTraps = ({state, action}) => {
     //
-    let handyPropsDataSource = op.get(action.toSet, 'DS.urlDSList', {})
+    let handyPropsDataSource = op.get(action.toSet, 'DS.urlDSList')
     if (handyPropsDataSource) {
         db.setHandyPropsDataSource(handyPropsDataSource);
     }
