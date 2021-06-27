@@ -22,9 +22,8 @@ db.version(1).stores({materials: '_id'});
 
 export function loadMaterials() {
     return ({data, dataSourceName}) => {
-        let dataValidated = JSON.parse(data);
         db.table(dataSourceName)
-            .bulkAdd(data).then((lastKey) => {
+            .bulkAdd(data[dataSourceName] ).then((lastKey) => {
         }).catch(Dexie.BulkError, (e) => {
             return false;
         });

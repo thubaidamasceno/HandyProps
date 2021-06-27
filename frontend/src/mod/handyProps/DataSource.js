@@ -10,7 +10,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {Link,Button} from "@material-ui/core";
+import {Link, Button} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
         root: {
@@ -81,25 +81,24 @@ function DataSource() {
                 >
                     <div className={classes.heading}>Endereço na Internet:</div>
                     <div><input className={classes.inputbox} value={urlDSList}
+                                multiple={true}
                                 onChange={(e) => {
                                     setUrlDSList(e.target.value);
                                 }}/></div>
                     {urlDSList !== urlDSListState ? <div>
-                        <Link
-                            href=''
+                        <Button
                             className={classes.buttonLink}
                             onClick={() => setUrlDSList(urlDSListState)}
-                        >Cancelar</Link>
-                        <Link href=''
-                              onClick={() => dispatch({type: act.hpSetState, toSet: {DS: {urlDSList}}})}
-                              className={classes.buttonLink}>Salvar</Link>
+                        >Cancelar</Button>
+                        <Button
+                            onClick={() => dispatch({type: act.hpSetState, toSet: {DS: {urlDSList}}})}
+                            className={classes.buttonLink}>Salvar</Button>
                     </div> : <div>
-                        <Link
-                            href=''
+                        <Button
                             className={classes.buttonLink}
                             onClick={() => reset()}
                             hidden={urlDSListDefault === urlDSList}
-                        >Restaurar Padrão</Link>
+                        >Restaurar Padrão</Button>
                         <Button
                             onClick={() => dispatch({
                                 type: act.hp.getDataSource,

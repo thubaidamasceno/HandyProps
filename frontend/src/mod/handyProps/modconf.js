@@ -31,7 +31,7 @@ var _act = {
     hpSetState: '',
     hp: {
         loadData: 0,
-        loadDataSources: 0,
+        // loadDataSources: 0,
         getDataSource: 0,
         setProcessing:0,
         unSetProcessing:0,

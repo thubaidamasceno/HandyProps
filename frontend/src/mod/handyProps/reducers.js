@@ -7,6 +7,7 @@ import * as op from 'object-path';
 import * as im from 'object-path-immutable';
 import * as db from './db';
 import {call, put, takeEvery} from 'redux-saga/effects'
+import {defaultFieldList,defaultColumns} from './fields';
 
 export const apiActs = {
     list: p => {
@@ -34,6 +35,10 @@ export const defaultState = (() => {
             urlDSList: getHandyPropsDataSource,
         },
         data: [],
+        defaultProperties: defaultFieldList(),
+        customProperties: [],
+        columnsAG:[],
+        gridColumns:defaultColumns(),
         processing: false,
         loading: false,
         loaded: false,
@@ -109,15 +114,16 @@ function* getDataSource(action) {
         });
         const RemoteData = yield call(apiActs.get, {url: action.url});
         const sucess = yield call(
-            db.loadMaterials,
+            db.loadMaterials(),
             {
                 dataSourceName: 'materials',
                 data: RemoteData,
             }
         );
         if (sucess) {
+
             yield put({
-                type: act.hp.loadDataSources
+                type: act.hp.loadData
             });
             return;
         }

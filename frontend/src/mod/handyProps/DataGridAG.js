@@ -17,36 +17,13 @@ const formatter = new Intl.NumberFormat('pt-BR',
     {style: 'decimal'});
 const numberFormatter = (params) => {
     if (params.value) {
-        if(params.value>=1e3 || params.value <= (-1e3) ||
-            (params.value>(-1e-3) && params.value < (1e-3)))
-        return formatterEng.format(params.value);
+        if (params.value >= 1e3 || params.value <= (-1e3) ||
+            (params.value > (-1e-3) && params.value < (1e-3)))
+            return formatterEng.format(params.value);
         return formatter.format(params.value);
     }
     return '';
 };
-
-const columns = (f => {
-    let r = [];
-    for (let k in f) {
-        if (f[k].g) {
-            let vf = undefined, tp = undefined;
-            if (f[k].n) {
-                vf = numberFormatter;
-                tp = 'numericColumn'
-            }
-            r.push(
-                <AgGridColumn
-                    field={k}
-                    sortable={true}
-                    headerName={f[k].pt}
-                    key={k}
-                    type={tp}
-                    valueFormatter={vf}
-                />);
-        }
-    }
-    return r;
-})(fields);
 
 
 function _DataGrid() {
@@ -54,6 +31,8 @@ function _DataGrid() {
     const loaded = useSelector(state => op.get(state, `handyProps.loaded`));
     const dataSize = useSelector(state => op.get(state, `handyProps.dataSize`));
     const data = useSelector(state => op.get(state, `handyProps.data`));
+    const gridColumns = useSelector(state => op.get(state, `handyProps.gridColumns`));
+
     const dispatch = useDispatch();
     const [gridApi, setGridApi] = useState(null);
     const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -65,6 +44,30 @@ function _DataGrid() {
         // };
         // dispatch(p);
     }, []);
+
+    const columns = (f => {
+        let r = [];
+        for (let k in f) {
+            if (f[k].g) {
+                let vf = undefined, tp = undefined;
+                if (f[k].n) {
+                    vf = numberFormatter;
+                    tp = 'numericColumn'
+                }
+                r.push(
+                    <AgGridColumn
+                        field={k}
+                        sortable={true}
+                        headerName={f[k].pt}
+                        hide={!gridColumns[k].visible}
+                        key={k}
+                        type={tp}
+                        valueFormatter={vf}
+                    />);
+            }
+        }
+        return r;
+    })(fields);
 
     const onGridReady = (params) => {
         setGridApi(params.api);
