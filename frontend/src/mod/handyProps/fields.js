@@ -3,7 +3,7 @@
 // n - se numérico
 // fixed - não pode ser invisibilizado
 // dv - visível por padrão
-
+import slugify from "slugify";
 
 // export const ValueFormatters ={
 //     n
@@ -36,14 +36,14 @@ const fields = {
     Price: {pt: 'Preço', g: 1, n: 1, unid: ''},
     Density: {pt: 'Densidade', dv: 1, g: 1, n: 1, unid: 'kg/m^3'},
     TensileStrength: {pt: 'Resistência à Tração', dv: 1, g: 1, n: 1, unid: 'MPa'},
-    YoungModulus: {pt: 'Módulo de Young', g: 1, dv: 1, n: 1, unid: ''},
+    YoungModulus: {pt: 'Módulo de Young', g: 1, dv: 1, n: 1, unid: 'MPa'},
     CompressiveStrength: {pt: 'Resistência à Compressão', dv: 1, g: 1, n: 1, unid: ''},
     ThermalConductivity: {pt: 'Condutividade Térmica', g: 1, n: 1, unid: ''},
     FlexuralModulus: {g: 1, n: 1, unid: '', pt: 'Módulo de Flexão'},
     ElectricalResistivity: {g: 1, n: 1, unid: '', pt: 'Resistividade Elétrica'},
     MaximumServiceTemperature: {g: 1, n: 1, unid: '', pt: 'Máxima Temperatura de Serviço'},
     ThermalExpansionCoefficient: {g: 1, n: 1, unid: '', pt: 'Coeficiente de Expansão Térmica'},
-    YieldStrength: {g: 1, n: 1, unid: '', dv: 1, pt: 'Resistência ao Escoamento'},
+    YieldStrength: {g: 1, n: 1, unid: 'MPa', dv: 1, pt: 'Resistência ao Escoamento'},
     SpecificHeatCapacity: {g: 1, n: 1, unid: '', pt: 'Calor Específico'},
     FlexuralStrength: {g: 1, n: 1, unid: '', pt: 'Resistência à Flexão'},
     PoissonRatio: {g: 1, n: 1, unid: '', dv: 1, pt: 'Razão de Poisson'},
@@ -108,7 +108,7 @@ export const defaultColumns = () => {
     let flist = {};
     for (let k in fields) {
         if (fields[k].g)
-            flist[k]=({
+            flist[k] = ({
                 visible: fields[k].fixed || fields[k].dv,
                 fixed: fields[k].fixed,
                 field: k,
@@ -116,5 +116,32 @@ export const defaultColumns = () => {
     }
     return flist;
 };
+const chartList = [
+    {
+        name: 'Densidade vs Limite de Escoamento',
+        axisX: 'Density',
+        axisY: 'YoungModulus',
+        isDefault: true,
+    },
+    {
+        name: 'Módulo de Young vs Razão de Poisson',
+        axisX: 'YoungModulus',
+        axisY: 'PoissonRatio',
+
+        isXlog: true,
+        isYlog: true,
+
+        isDefault: true,
+    },
+];
+export const defaultCharts = () => {
+    return chartList.reduce((a, b) => {
+        let slug = slugify(b.name, '_');
+        a[slug] = {...b, slug};
+        return a;
+    }, {});
+};
+
+export const defaultChartNames = () => chartList.map(b => slugify(b.name, '_'));
 
 export default fields;

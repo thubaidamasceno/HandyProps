@@ -6,6 +6,7 @@ import {
     APPLY_TAG_FILTER
 } from '../../constants/actionTypes';
 import ScatterChart from './ScatterChart';
+import ScatterApex from './ScatterApex';
 
 const Promise = global.Promise;
 
@@ -28,7 +29,7 @@ class Home extends React.Component {
     render() {
         return (
             // <div className="">
-                <ScatterChart/>
+                <ScatterApex/>
             // </div>
         );
     }

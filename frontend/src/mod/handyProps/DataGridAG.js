@@ -10,11 +10,13 @@ import {useSelector, useDispatch} from 'react-redux';
 import * as op from "object-path";
 import {act} from "./modconf";
 import fields from './fields';
+import CustomTooltip from './customTooltip';
 
 const formatterEng = new Intl.NumberFormat('pt-BR',
     {style: 'decimal', notation: 'engineering'});
 const formatter = new Intl.NumberFormat('pt-BR',
     {style: 'decimal'});
+//
 const numberFormatter = (params) => {
     if (params.value) {
         if (params.value >= 1e3 || params.value <= (-1e3) ||
@@ -59,7 +61,10 @@ function _DataGrid() {
                         field={k}
                         sortable={true}
                         headerName={f[k].pt}
+                        headerTooltip={f[k].pt}
                         hide={!gridColumns[k].visible}
+                        // tooltipComponent="customTooltip"
+                        tooltipField={k}
                         key={k}
                         type={tp}
                         valueFormatter={vf}
@@ -106,17 +111,18 @@ function _DataGrid() {
         >
             <AgGridReact
                 rowData={data}
+                frameworkComponents={{customTooltip: CustomTooltip}}
                 defaultColDef={{
                     sortable: true,
                     resizable: true,
                     width: 100,
-                    enableRowGroup: true,
-                    enablePivot: true,
-                    enableValue: true,
+                    //enableRowGroup: true,
+                    //enablePivot: true,
+                    //enableValue: true,
                 }}
                 sideBar={{toolPanels: ['columns']}}
-                rowGroupPanelShow={'always'}
-                pivotPanelShow={'always'}
+                rowGroupPanelShow='always'
+                pivotPanelShow='always'
                 onGridReady={onGridReady}
                 // applyColumnDefOrder={true}
             >

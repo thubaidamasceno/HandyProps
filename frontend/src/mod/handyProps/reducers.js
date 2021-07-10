@@ -7,7 +7,7 @@ import * as op from 'object-path';
 import * as im from 'object-path-immutable';
 import * as db from './db';
 import {call, put, takeEvery} from 'redux-saga/effects'
-import {defaultFieldList,defaultColumns} from './fields';
+import {defaultFieldList, defaultColumns, defaultCharts, defaultChartNames} from './fields';
 
 export const apiActs = {
     list: p => {
@@ -35,16 +35,61 @@ export const defaultState = (() => {
             urlDSList: getHandyPropsDataSource,
         },
         data: [],
+        colors:{
+            '1':'rgb(31,68,148)',
+            '2':'rgb(148,0,122)',
+            '3':'rgb(224,132,219)',
+            '4':'rgb(205,226,18)',
+            '5':'rgb(147,216,58)',
+            '6':'rgb(177,123,112)',
+            '7':'rgb(250,216,86)',
+            '8':'rgb(13,58,216)',
+            '9':'rgb(209,151,175)',
+            '10':'rgb(114,75,44)',
+            '11':'rgb(43,93,1)',
+            '12':'rgb(120,52,58)',
+            '13':'rgb(46,17,202)',
+            '14':'rgb(18,158,41)',
+
+        },
+        colorLabels:{
+            '0':'Others (Outros)',
+            '1':'Foams (Espumas)',
+            '2':'Grupo 2',
+            '3':'Não Metais',
+            '4':'Vidros ',
+            '5':'Elastômeros',
+            '6':'Grupo 3',
+            '7':'Madeiras',
+            '8':'Grupo 4',
+            '9':'Materiais de construção',
+            '10':'Grupo 5',
+            '11':'Grupo 6',
+            '13':'Grupo 7',
+            '14':'Grupo 8',
+
+        },
         defaultProperties: defaultFieldList(),
         customProperties: [],
-        columnsAG:[],
-        gridColumns:defaultColumns(),
+        columnsAG: [],
+        gridColumns: defaultColumns(),
+        //
+        chartList: defaultCharts(),
+        chartNames: defaultChartNames(),
+        chartSelected: '',
+        //
         processing: false,
         loading: false,
         loaded: false,
         clicks: 0,
         dataSize: 0,
     };
+    for(let k in ds.chartList){
+        if(ds.chartList[k].isDefault){
+            ds.chartSelected=k;
+            break;
+        }
+    }
     return ds;
 })();
 
@@ -177,10 +222,10 @@ const toSetTraps = ({state, action}) => {
         db.setHandyPropsDataSource(handyPropsDataSource);
     }
 
-    let data = op.get(action.toSet, 'data')
-    if (data) {
-        state = im.set(state, 'chartData', data.map(m => ({x: m.Density, y: m.TensileStrength})));
-    }
+    // let data = op.get(action.toSet, 'data')
+    // if (data) {
+    //     state = im.set(state, 'chartData', data.map(m => ({x: m.Density, y: m.TensileStrength})));
+    // }
 
     //
     return im.merge(state, '', op.get(action, 'toSet', {}));

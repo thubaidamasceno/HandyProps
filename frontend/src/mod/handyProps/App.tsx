@@ -9,6 +9,8 @@ import * as op from "object-path";
 import {act} from './modconf'
 
 import Chart from './ScatterChartJS';
+// import Chart from './ScatterApex';
+//
 import DataGrid from './DataGridAG';
 import Filtro from './Filtro';
 import DataSource from './DataSource';

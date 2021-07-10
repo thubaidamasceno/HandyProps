@@ -55,3 +55,5 @@ Promise.resolve(axios
         }
     })
     .catch((e) => console.log(e))).then(x => inicia());
+
+// todo: tooltip nos nomes de colunas
