@@ -69,25 +69,19 @@ function Properties() {
 
     return (
         <div className={classes.root}>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                >
-                    <Typography className={classes.heading}>Propiedades Básicas</Typography>
-                </AccordionSummary>
-                <AccordionDetails
-                    className={classes.root}
-                >
+            {/*<Accordion>*/}
+            {/*    <AccordionSummary*/}
+            {/*        expandIcon={<ExpandMoreIcon/>}*/}
+            {/*        aria-controls="panel1a-content"*/}
+            {/*        id="panel1a-header"*/}
+            {/*    >*/}
+            {/*        <Typography className={classes.heading}>Propiedades Básicas</Typography>*/}
+            {/*    </AccordionSummary>*/}
+            {/*    <AccordionDetails*/}
+            {/*        className={classes.root}*/}
+            {/*    >*/}
                     <List dense>
-                        {/*<ListItem>*/}
-                        {/*    OK*/}
-                        {/*</ListItem>*/}
-                        {/*<ListItem>*/}
-                        {/*    xxx*/}
-                        {/*    <Button>teste</Button>*/}
-                        {/*</ListItem>*/}
+
                         {defaultProperties.filter(
                             v => v.g
                         ).map(
@@ -118,31 +112,31 @@ function Properties() {
                             )
                         )}
                     </List>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel1a-content"
-                    id="panel2a-header"
-                >
-                    <Typography className={classes.heading}>Propriedades Derivadas</Typography>
-                </AccordionSummary>
-                <AccordionDetails
-                    className={classes.root}
-                >
-                    <Button>Criar Propriedade Derivada</Button>
-                    <List dense>
-                        <ListItem>
-                            OK
-                        </ListItem>
-                        <ListItem>
-                            xxx
-                            <Button>excluir</Button>
-                        </ListItem>
-                    </List>
-                </AccordionDetails>
-            </Accordion>
+            {/*    </AccordionDetails>*/}
+            {/*</Accordion>*/}
+            {/*<Accordion>*/}
+            {/*    <AccordionSummary*/}
+            {/*        expandIcon={<ExpandMoreIcon/>}*/}
+            {/*        aria-controls="panel1a-content"*/}
+            {/*        id="panel2a-header"*/}
+            {/*    >*/}
+            {/*        <Typography className={classes.heading}>Propriedades Derivadas</Typography>*/}
+            {/*    </AccordionSummary>*/}
+            {/*    <AccordionDetails*/}
+            {/*        className={classes.root}*/}
+            {/*    >*/}
+            {/*        <Button>Criar Propriedade Derivada</Button>*/}
+            {/*        <List dense>*/}
+            {/*            <ListItem>*/}
+            {/*                OK*/}
+            {/*            </ListItem>*/}
+            {/*            <ListItem>*/}
+            {/*                xxx*/}
+            {/*                <Button>excluir</Button>*/}
+            {/*            </ListItem>*/}
+            {/*        </List>*/}
+            {/*    </AccordionDetails>*/}
+            {/*</Accordion>*/}
         </div>
     );
 }

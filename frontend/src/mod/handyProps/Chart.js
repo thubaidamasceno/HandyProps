@@ -7,6 +7,9 @@ import {
 } from '../../constants/actionTypes';
 import ScatterChart from './ScatterChart';
 import ScatterApex from './ScatterApex';
+import Button from "@material-ui/core/Button";
+
+'@material-ui/core/Button';
 
 const Promise = global.Promise;
 
@@ -28,9 +31,14 @@ const mapDispatchToProps = dispatch => ({
 class Home extends React.Component {
     render() {
         return (
-            // <div className="">
-                <ScatterApex/>
-            // </div>
+            <div className="">
+                <Button
+                    // className={classes.buttonLink}
+                    onClick={() => {
+                    }}
+                >Exportar Gráfico</Button>
+                < ScatterApex />
+            </div>
         );
     }
 }

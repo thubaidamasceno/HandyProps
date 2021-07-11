@@ -123,7 +123,7 @@ const materialFilter = (filters) => {
     }
     return ((v) => {
         return f.every(filter => {
-            console.log(filter)
+            // console.log(filter)
             return filter.ev.evaluate({
                 [filter.field]: op.get(v, filter.field),
             })
@@ -144,7 +144,7 @@ function* loadData(action) {
             materialFilter(filter)
             // ()=>true
         ), data => data);
-        console.log(['data.length', data.length])
+        // console.log(['data.length', data.length])
         yield put({
             type: act.hpSetState, toSet: {
                 processing: false,
@@ -306,7 +306,7 @@ const reducerBase = (state = defaultState, action) => {
                 processing: false,
             };
         case   act.HP_NODECHANGE:
-            console.log(action.xxx);
+            // console.log(action.xxx);
             return {
                 ...state,
                 clicks: state.clicks + 1,

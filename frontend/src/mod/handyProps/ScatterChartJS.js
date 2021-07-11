@@ -1,11 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import ReactDOM from 'react-dom';
 import * as op from "object-path";
 import {act} from "./modconf";
 import fields from './fields';
 import {Scatter, Chart, defaults} from 'react-chartjs-2';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import * as im from "object-path-immutable";
+import Button from "@material-ui/core/Button";
+import FileSaver from 'file-saver';
 
 Chart.register(zoomPlugin);
 defaults.animation = false;
@@ -17,11 +20,27 @@ const formatter = (new Intl.NumberFormat('pt-BR',
 const formatterEng = v => (!(v >= 1e3 || v <= (-1e3) ||
     (v > (-1e-1) && v < (1e-1))) ? formatter(v).toLowerCase() : formatterEng_(v).toLowerCase());
 
+function exportChart(chart, asSVG = true) {
+
+    // A Recharts component is rendered as a div that contains namely an SVG
+    // which holds the chart. We can access this SVG by calling upon the first child/
+    let chartSVG = ReactDOM.findDOMNode(chart).children[0];
+
+    if (asSVG) {
+        let svgURL = new XMLSerializer().serializeToString(chartSVG);
+        let svgBlob = new Blob([svgURL], {type: "image/svg+xml;charset=utf-8"});
+        FileSaver.saveAs(svgBlob, this.state.uuid + ".svg");
+    } else {
+        let svgBlob = new Blob([chartSVG.outerHTML], {type: "text/html;charset=utf-8"});
+        FileSaver.saveAs(svgBlob, this.state.uuid + ".html");
+    }
+}
+
 function _ScatterChart() {
     const data = useSelector(state => op.get(state, `handyProps.data`));
     const colors = useSelector(state => op.get(state, `handyProps.colors`));
     const colorLabels = useSelector(state => op.get(state, `handyProps.colorLabels`));
-    const ref = useRef();
+    const ref = useRef(null);
     const chartSelected = useSelector(state => op.get(state, `handyProps.chartSelected`));
     // const chartList = useSelector(state => op.get(state, `handyProps.chartList`));
     const chartDef = useSelector(state => op.get(state, `handyProps.chartList.${chartSelected}`));
@@ -92,7 +111,10 @@ function _ScatterChart() {
     const externalTooltipHandler = (context) => {
         // Tooltip Element
         const {chart, tooltip} = context;
+
+
         const tooltipEl = getOrCreateTooltip(chart);
+
 
         // Hide if no tooltip
         if (tooltip.opacity === 0) {
@@ -168,18 +190,20 @@ function _ScatterChart() {
                 });
 
             const tableRoot = tooltipEl.querySelector('table');
+            if (tableRoot) {
+                // Remove old children
+                while (tableRoot.firstChild) {
+                    tableRoot.firstChild.remove();
+                }
 
-            // Remove old children
-            while (tableRoot.firstChild) {
-                tableRoot.firstChild.remove();
+                // Add new children
+                tableRoot.appendChild(tableHead);
+                tableRoot.appendChild(tableBody);
             }
-
-            // Add new children
-            tableRoot.appendChild(tableHead);
-            tableRoot.appendChild(tableBody);
         }
 
         const {offsetLeft: positionX, offsetTop: positionY} = chart.canvas;
+
 
         // Display, position, and set styles for font
         tooltipEl.style.opacity = 1;
@@ -222,7 +246,7 @@ function _ScatterChart() {
                 },
                 type: (op.get(chartDef, 'isYlog') ? 'logarithmic' : 'linear'),
                 ticks: {
-                    callback: (val, index, ticks) =>  formatterEng(val),
+                    callback: (val, index, ticks) => formatterEng(val),
                 },
                 // grid: {
                 //     borderColor: 'green',
@@ -265,18 +289,49 @@ function _ScatterChart() {
                 },
             },
         },
-        onClick(e) {
-            const chart = e.chart;
-            chart.resetZoom();
-        }
+        // onClick(e) {
+        //     const chart = e.chart;
+        //     chart.resetZoom();
+        // },
     };
 
     return (
-        <Scatter
-            ref={ref}
-            data={data_}
-            options={optionsx}
-        />
+        <>          <span style={
+            {
+                position: 'absolute',
+                // display: 'flex',
+            }
+        }>
+            <Button
+                // className={classes.buttonLink}
+                style={{fontSize: 'x-small', textDecoration: 'underline'}}
+                onClick={() => {
+                    const ctx = ref.current.ctx;
+                    ctx.save();
+                    ctx.fillStyle = 'white';
+                    ctx.globalCompositeOperation = 'destination-over';
+                    ctx.fillRect(0, 0, ref.current.width, ref.current.height);
+                    ctx.save();
+                    let svgURL = ref.current.toBase64Image();
+                    FileSaver.saveAs(svgURL, `${op.get(chartDef, 'name')}.png`);
+                }
+                }
+            >Exportar Gráfico</Button>
+            <Button
+                // className={classes.buttonLink}
+                style={{fontSize: 'x-small', textDecoration: 'underline'}}
+                onClick={() => {
+                    ref.current.resetZoom();
+                }}>Resetar Zoom</Button>
+        </span>
+
+            <Scatter
+                ref={ref}
+                data={data_}
+                options={optionsx}
+            />
+
+        </>
     );
 }
 

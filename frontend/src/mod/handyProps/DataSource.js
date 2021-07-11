@@ -140,16 +140,32 @@ function DataSource() {
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
-                    <Typography className={classes.heading}>Informação</Typography>
+                    <Typography className={classes.heading}>Projeto</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <>
-                        <center> {loaded ? <>
-                            {`${data.length} materiais carregados`}
-                        </> : "Não Há Dados Carregados"}</center>
-                        {processing && <><p/><CircularProgress
-                            size={20}
-                        /></>}
+                        <div style={{display:'flex',flexDirection:'column'}}>
+                        <div>
+                            <center> {loaded ? <>
+                                {`${data.length} materiais carregados`}
+                            </> : "Não Há Dados Carregados"}</center>
+                            {processing && <><p/><CircularProgress
+                                size={20}
+                            /></>}
+                        </div>
+                        <div>
+                            <Button
+                                className={classes.buttonLink}
+                                onClick={() => {
+                                }}
+                            >Salvar e Baixar Projeto</Button>
+                        </div>
+                        <div>
+                            <Button
+                                className={classes.buttonLink}
+                                onClick={() => {
+                                }}
+                            >Abrir Projeto Salvo</Button></div></div>
                     </>
                 </AccordionDetails>
             </Accordion>
