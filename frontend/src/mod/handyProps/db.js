@@ -35,8 +35,8 @@ export function listMaterials(filter) {
     return (cb) => {
         return db.table('materials')
             .filter(
-                // filter
-                () => true
+                filter
+                // () => true
             )
             .toArray()
             .then(cb);

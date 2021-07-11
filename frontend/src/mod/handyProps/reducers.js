@@ -6,6 +6,7 @@ import {act} from './modconf';
 import * as op from 'object-path';
 import * as im from 'object-path-immutable';
 import * as db from './db';
+import expr from 'expr-eval';
 import {call, put, select, takeEvery} from 'redux-saga/effects'
 import {
     defaultFieldList,
@@ -13,7 +14,8 @@ import {
     defaultCharts,
     defaultChartNames,
     defaultFilters,
-    defaultFilterNames
+    defaultFilterNames,
+    filterOperations,
 } from './fields';
 
 export const apiActs = {
@@ -106,11 +108,26 @@ export const defaultState = (() => {
 const materialFilter = (filters) => {
     let f = [];
     for (let k in filters) {
-        if (op.get(filters, [k, 'enabled']))
-            f.push(filters[k]);
+        if (op.get(filters, [k, 'enabled'])) {
+            f.push({
+                ...filters[k],
+                ev: expr.Parser.parse(`${
+                    op.get(filters, [k, 'field'], 'field')
+                } ${
+                    op.get(filterOperations, [op.get(filters, [k, 'operator']), 'symbol'], 'symbol')
+                } ${
+                    op.get(filters, [k, 'value'], 'value')
+                }`)
+            });
+        }
     }
     return ((v) => {
-        return true;
+        return f.every(filter => {
+            console.log(filter)
+            return filter.ev.evaluate({
+                [filter.field]: op.get(v, filter.field),
+            })
+        });
     });
 };
 
@@ -124,9 +141,10 @@ function* loadData(action) {
             }
         });
         const data = yield call(db.listMaterials(
-            // materialFilter(filter)
-            ()=>true
+            materialFilter(filter)
+            // ()=>true
         ), data => data);
+        console.log(['data.length', data.length])
         yield put({
             type: act.hpSetState, toSet: {
                 processing: false,
@@ -191,7 +209,6 @@ function* getDataSource(action) {
             }
         );
         if (sucess) {
-
             yield put({
                 type: act.hp.loadData
             });
@@ -226,9 +243,13 @@ function* HP_LOADED(action) {
 }
 
 function* StateTraps(action) {
-    if (true) {
-
+    let filterList = op.get(action.toSet, 'filterList')
+    if (filterList) {
+        yield put({
+            type: act.hp.loadData
+        });
     }
+    yield true;
 }
 
 
@@ -237,7 +258,7 @@ export const sagas = [
         yield takeEvery(act.hp.loadData, loadData);
     })(),
     (function* () {
-        yield takeEvery(act.hp.toSet, StateTraps);
+        yield takeEvery(act.hpSetState, StateTraps);
     })(),
     (function* () {
         yield takeEvery(act.hp.getDataSource, getDataSource);
@@ -272,6 +293,7 @@ const reducerBase = (state = defaultState, action) => {
         //         // data: db.get,
         //     };
         case   act.hpSetState:
+            // console.log(['reducerBase', action])
             return toSetTraps({state, action});
         case   act.hp.setProcessing:
             return {
