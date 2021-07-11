@@ -313,7 +313,10 @@ function _ScatterChart() {
                     ctx.fillRect(0, 0, ref.current.width, ref.current.height);
                     ctx.save();
                     let svgURL = ref.current.toBase64Image();
+                    // let svgBlob = new Blob([svgURL], {type: "image/png;charset=utf-8"});
                     FileSaver.saveAs(svgURL, `${op.get(chartDef, 'name')}.png`);
+                    // const blob = b64toBlob(svgURL, 'image/png');
+                    // window.location = URL.createObjectURL(svgURL);
                 }
                 }
             >Exportar Gráfico</Button>

@@ -321,6 +321,34 @@ const reducerBase = (state = defaultState, action) => {
                 default:
                     return state;
             }
+
+        case   act.EditDialog:
+            v.act = action.act;
+            switch (v.act) {
+                case 'askEdit':
+                    return {
+                        ...state,
+                        editDialog: {
+                            ...state.editDialog,
+                            visible: true,
+                        },
+                    };
+                case 'editClose':
+                    return {
+                        ...state,
+                        editDialog: {
+                            ...state.editDialog,
+                            visible: false,
+                        },
+                    };
+                case 'validEdit':
+                    return {
+                        ...state,
+                    };
+                default:
+                    return state;
+            }
+            ;
         case   act.HP_ACT.createDB:
             let xAct = action.p ? action.p.act : '';
             switch (xAct) {

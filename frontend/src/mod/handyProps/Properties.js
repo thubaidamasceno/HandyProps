@@ -15,6 +15,7 @@ import {
     Link, ListItem, Button, List
 } from "@material-ui/core";
 import CommentIcon from '@material-ui/icons/Comment';
+import fields from "./fields";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -101,7 +102,7 @@ function Properties() {
                                         />
                                     </ListItemIcon>
                                     <ListItemText id={v.field} primary={v.pt}
-                                                  secondary={v.field}
+                                                  secondary={`${v.field}${(a=>a?` (${a})`:'')(op.get(fields, [v.field,'unid']))}`}
                                     />
                                     {/*<ListItemSecondaryAction>*/}
                                     {/*    <IconButton edge="end" aria-label="Comments">*/}

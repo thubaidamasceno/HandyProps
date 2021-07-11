@@ -16,6 +16,7 @@ import {
     Link, ListItem, Button, List
 } from "@material-ui/core";
 import CommentIcon from '@material-ui/icons/Comment';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -104,8 +105,18 @@ function Properties() {
                                     filterList[v].value
                                 } ${
                                     op.get(fields, [filterList[v].field, 'unid'])
-                                }`}
-                            />
+                                }`}/>
+
+                            <ListItemSecondaryAction>
+                                <IconButton edge="end" aria-label="Comments"
+                                onClick={()=>{
+                                    dispatch({type:act.EditDialog,act:'askEdit'})
+                                }}
+                                >
+                                    <EditIcon/>
+                                </IconButton>
+                            </ListItemSecondaryAction>
+
                         </ListItem>
                     )
                 )}

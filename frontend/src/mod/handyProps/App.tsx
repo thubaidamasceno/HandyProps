@@ -5,7 +5,7 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import * as op from "object-path";
 // import {apiActs} from "./reducers";
-
+import EditDialog from './EditDialog';
 import {act} from './modconf'
 
 import Chart from './ScatterChartJS';
@@ -71,7 +71,7 @@ var json: IJsonModel = {
             "location": "left",
             show: true,
             selected: 0,
-            size:300,
+            size: 300,
             "children": [
                 {
                     "type": "tab",
@@ -161,10 +161,20 @@ function App() {
     };
 
     return (
-        <Layout
-            model={model}
-            factory={factory}/>
-    );
+        <>
+            < Layout
+                model={model}
+                factory={factory}
+            />
+            <EditDialog
+                txt={`Renomear '${'this.props.name'}' como`}
+                visibleP='renaming'
+                yesDisP='invalidRename'
+                closeAct='editClose'
+                inputP='renameText'
+                noAct='renameClose'
+                errorTxt='renameErrors'/>
+        </>);
 }
 
 

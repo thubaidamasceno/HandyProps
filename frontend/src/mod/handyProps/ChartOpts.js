@@ -15,6 +15,7 @@ import {
     Link, ListItem, Button, List
 } from "@material-ui/core";
 import CommentIcon from '@material-ui/icons/Comment';
+import EditIcon from "@material-ui/icons/Edit";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +70,8 @@ function Properties() {
                     dense
                 > <Button
                     className={classes.buttonLink}
-                    onClick={() => {}}
+                    onClick={() => {
+                    }}
                 >Novo Gráfico</Button></ListItem>
                 {chartNames.map(
                     v => (
@@ -89,13 +91,15 @@ function Properties() {
                             <ListItemText
                                 id={v}
                                 primary={chartList[v].name}
-                                // secondary={v.field}
+                                secondary={
+                                    `${chartList[v].axisX} vs ${chartList[v].axisY}`
+                                }
                             />
-                            {/*<ListItemSecondaryAction>*/}
-                            {/*    <IconButton edge="end" aria-label="Comments">*/}
-                            {/*        <CommentIcon/>*/}
-                            {/*    </IconButton>*/}
-                            {/*</ListItemSecondaryAction>*/}
+                            <ListItemSecondaryAction>
+                                <IconButton edge="end" aria-label="Comments">
+                                    <EditIcon/>
+                                </IconButton>
+                            </ListItemSecondaryAction>
                         </ListItem>
                     )
                 )}

@@ -166,7 +166,7 @@ const filterList = [
         field: 'YoungModulus',
         operator: 'gte',
         value: 200,
-        enabled: true,
+        enabled: false,
     },
 ];
 export const defaultFilters = () => {
