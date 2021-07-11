@@ -67,7 +67,10 @@ function Properties() {
             <List dense>
                 <ListItem
                     dense
-                >Novo Gráfico</ListItem>
+                > <Button
+                    className={classes.buttonLink}
+                    onClick={() => {}}
+                >Novo Gráfico</Button></ListItem>
                 {chartNames.map(
                     v => (
                         <ListItem key={v}

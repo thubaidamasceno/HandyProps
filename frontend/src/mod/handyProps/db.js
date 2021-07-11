@@ -23,7 +23,7 @@ db.version(1).stores({materials: '_id'});
 export function loadMaterials() {
     return ({data, dataSourceName}) => {
         db.table(dataSourceName)
-            .bulkAdd(data[dataSourceName] ).then((lastKey) => {
+            .bulkAdd(data[dataSourceName]).then((lastKey) => {
         }).catch(Dexie.BulkError, (e) => {
             return false;
         });
@@ -31,9 +31,13 @@ export function loadMaterials() {
     };
 }
 
-export function listMaterials() {
+export function listMaterials(filter) {
     return (cb) => {
         return db.table('materials')
+            .filter(
+                // filter
+                () => true
+            )
             .toArray()
             .then(cb);
     };

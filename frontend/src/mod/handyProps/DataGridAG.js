@@ -12,17 +12,15 @@ import {act} from "./modconf";
 import fields from './fields';
 import CustomTooltip from './customTooltip';
 
-const formatterEng = new Intl.NumberFormat('pt-BR',
-    {style: 'decimal', notation: 'engineering'});
-const formatter = new Intl.NumberFormat('pt-BR',
-    {style: 'decimal'});
-//
+const formatterEng_ = (new Intl.NumberFormat('pt-BR',
+    {style: 'decimal', maximumFractionDigits: 3, maximumSignificantDigits: 4, notation: 'engineering'})).format;
+const formatter = (new Intl.NumberFormat('pt-BR',
+    {style: 'decimal', maximumFractionDigits: 3, maximumSignificantDigits: 4})).format;
+const formatterEng = v => (!(v >= 1e3 || v <= (-1e3) ||
+    (v > (-1e-1) && v < (1e-1))) ? formatter(v).toLowerCase() : formatterEng_(v).toLowerCase());//
 const numberFormatter = (params) => {
     if (params.value) {
-        if (params.value >= 1e3 || params.value <= (-1e3) ||
-            (params.value > (-1e-3) && params.value < (1e-3)))
-            return formatterEng.format(params.value);
-        return formatter.format(params.value);
+        return formatterEng(params.value);
     }
     return '';
 };

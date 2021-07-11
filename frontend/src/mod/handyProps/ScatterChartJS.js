@@ -10,6 +10,13 @@ import * as im from "object-path-immutable";
 Chart.register(zoomPlugin);
 defaults.animation = false;
 
+const formatterEng_ = (new Intl.NumberFormat('pt-BR',
+    {style: 'decimal', maximumFractionDigits: 3, maximumSignificantDigits: 4, notation: 'engineering'})).format;
+const formatter = (new Intl.NumberFormat('pt-BR',
+    {style: 'decimal', maximumFractionDigits: 3, maximumSignificantDigits: 4})).format;
+const formatterEng = v => (!(v >= 1e3 || v <= (-1e3) ||
+    (v > (-1e-1) && v < (1e-1))) ? formatter(v).toLowerCase() : formatterEng_(v).toLowerCase());
+
 function _ScatterChart() {
     const data = useSelector(state => op.get(state, `handyProps.data`));
     const colors = useSelector(state => op.get(state, `handyProps.colors`));
@@ -29,6 +36,7 @@ function _ScatterChart() {
                 if (!datasets[color])
                     datasets[color] = {
                         label: colorLabels[color],
+                        fill: false,
                         data: [],
                         backgroundColor: op.get(colors, color),
                     };
@@ -138,10 +146,8 @@ function _ScatterChart() {
                         const td = document.createElement('td');
                         td.style.borderWidth = 0;
 
-                        const text = document.createTextNode(data[body.raw.idx].Name+
-                            ','+body.raw.idx
-                            +','+body.raw.x
-                           +','+body.raw.y
+                        const text = document.createTextNode(data[body.raw.idx].Name
+                            + ' (' + formatterEng(body.raw.x) + ' / ' + formatterEng(body.raw.y) + ')'
                         );
                         // const text = document.createTextNode(data[body.raw.idx].Name);
 
@@ -184,42 +190,86 @@ function _ScatterChart() {
     };
 
     const optionsx = {
-            scales: {
-                x: {
+        // limits: {
+        //     x: {min: -200, max: 200, minRange: 50},
+        //     y: {min: -200, max: 200, minRange: 50}
+        // },
+        scales: {
+            x: {
+                display: true,
+                title: {
                     display: true,
-                    title: {
-                        display: true,
-                        text: op.get(fields, [op.get(chartDef, 'axisX'), 'pt'], op.get(chartDef, 'axisX')) +
-                            (a => a ? ` (${a})` : '')(op.get(fields, [op.get(chartDef, 'axisX'), 'unid'])),
-                    },
-                    type: op.get(chartDef, 'isXlog') ? 'logarithmic' : 'linear',
+                    text: op.get(fields, [op.get(chartDef, 'axisX'), 'pt'], op.get(chartDef, 'axisX')) +
+                        (a => a ? ` (${a})` : '')(op.get(fields, [op.get(chartDef, 'axisX'), 'unid'])),
                 },
-                y: {
+                type: op.get(chartDef, 'isXlog') ? 'logarithmic' : 'linear',
+                ticks: {
+                    callback: (val, index, ticks) => formatterEng(val),
+                },
+                // grid: {
+                //     borderColor: 'blue',
+                //     color: 'rgba( 0, 0, 0, 0.1)',
+                // },
+                // position: 'top',
+                // reverse: true,
+            },
+            y: {
+                display: true,
+                title: {
                     display: true,
-                    title: {
-                        display: true,
-                        text: op.get(fields, [op.get(chartDef, 'axisY'), 'pt'], op.get(chartDef, 'axisY'))+
-                            (a => a ? ` (${a})` : '')(op.get(fields, [op.get(chartDef, 'axisY'), 'unid'])),
-                    },
-                    type: (op.get(chartDef, 'isYlog') ? 'logarithmic' : 'linear'),
-                }
-            },
-            interaction: {intersect: true, mode: 'point',},
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {display: true, text: op.get(chartDef, 'name'),},
-                tooltip: {
-                    enabled: false,
-                    position: 'nearest',
-                    xAlign: 'right',
-                    yAlign: 'center',
-                    external: externalTooltipHandler
+                    text: op.get(fields, [op.get(chartDef, 'axisY'), 'pt'], op.get(chartDef, 'axisY')) +
+                        (a => a ? ` (${a})` : '')(op.get(fields, [op.get(chartDef, 'axisY'), 'unid'])),
                 },
-                zoom: {zoom: {wheel: {enabled: true,}, pinch: {enabled: true}, mode: 'xy',}}
+                type: (op.get(chartDef, 'isYlog') ? 'logarithmic' : 'linear'),
+                ticks: {
+                    callback: (val, index, ticks) =>  formatterEng(val),
+                },
+                // grid: {
+                //     borderColor: 'green',
+                //     color: 'rgba( 0, 0, 0, 0.1)',
+                // },
+                // position: 'right',
+                // reverse: true,
+            }
+        },
+        interaction: {intersect: true, mode: 'point',},
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {display: true, text: op.get(chartDef, 'name'),},
+            tooltip: {
+                enabled: false,
+                position: 'nearest',
+                xAlign: 'right',
+                yAlign: 'center',
+                external: externalTooltipHandler
             },
+            zoom: {
+                zoom: {
+                    wheel: {
+                        enabled: true,
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    drag: {
+                        enabled: true
+                    },
+                    mode: 'xy',
+                    overScaleMode: '',
+                },
+                pan: {
+                    enabled: true,
+                    mode: 'xy',
+                    overScaleMode: 'xy',
+                },
+            },
+        },
+        onClick(e) {
+            const chart = e.chart;
+            chart.resetZoom();
         }
-    ;
+    };
 
     return (
         <Scatter

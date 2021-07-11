@@ -6,8 +6,15 @@ import {act} from './modconf';
 import * as op from 'object-path';
 import * as im from 'object-path-immutable';
 import * as db from './db';
-import {call, put, takeEvery} from 'redux-saga/effects'
-import {defaultFieldList, defaultColumns, defaultCharts, defaultChartNames} from './fields';
+import {call, put, select, takeEvery} from 'redux-saga/effects'
+import {
+    defaultFieldList,
+    defaultColumns,
+    defaultCharts,
+    defaultChartNames,
+    defaultFilters,
+    defaultFilterNames
+} from './fields';
 
 export const apiActs = {
     list: p => {
@@ -35,38 +42,38 @@ export const defaultState = (() => {
             urlDSList: getHandyPropsDataSource,
         },
         data: [],
-        colors:{
-            '1':'rgb(31,68,148)',
-            '2':'rgb(148,0,122)',
-            '3':'rgb(224,132,219)',
-            '4':'rgb(205,226,18)',
-            '5':'rgb(147,216,58)',
-            '6':'rgb(177,123,112)',
-            '7':'rgb(250,216,86)',
-            '8':'rgb(13,58,216)',
-            '9':'rgb(209,151,175)',
-            '10':'rgb(114,75,44)',
-            '11':'rgb(43,93,1)',
-            '12':'rgb(120,52,58)',
-            '13':'rgb(46,17,202)',
-            '14':'rgb(18,158,41)',
+        colors: {
+            '1': 'rgba(31,68,88,0.6)',
+            '2': 'rgba(148,0,122,0.6)',
+            '3': 'rgba(224,132,219,0.6)',
+            '4': 'rgba(205,226,18,0.6)',
+            '5': 'rgba(147,216,58,0.6)',
+            '6': 'rgba(177,123,112,0.6)',
+            '7': 'rgba(250,216,86,0.6)',
+            '8': 'rgba(13,58,216,0.6)',
+            '9': 'rgba(209,151,175,0.6)',
+            '10': 'rgba(114,75,44,0.6)',
+            '11': 'rgba(43,93,1,0.6)',
+            '12': 'rgba(120,52,58,0.6)',
+            '13': 'rgba(46,17,202,0.6)',
+            '0': 'rgba(188,188,188,0.6)',
 
         },
-        colorLabels:{
-            '0':'Others (Outros)',
-            '1':'Foams (Espumas)',
-            '2':'Grupo 2',
-            '3':'Não Metais',
-            '4':'Vidros ',
-            '5':'Elastômeros',
-            '6':'Grupo 3',
-            '7':'Madeiras',
-            '8':'Grupo 4',
-            '9':'Materiais de construção',
-            '10':'Grupo 5',
-            '11':'Grupo 6',
-            '13':'Grupo 7',
-            '14':'Grupo 8',
+        colorLabels: {
+            '0': 'Others (Outros)',
+            '1': 'Foams (Espumas)',
+            '2': 'Grupo 2',
+            '3': 'Não Metais',
+            '4': 'Vidros ',
+            '5': 'Elastômeros',
+            '6': 'Grupo 3',
+            '7': 'Madeiras',
+            '8': 'Grupo 4',
+            '9': 'Materiais de construção',
+            '10': 'Grupo 5',
+            '11': 'Grupo 6',
+            '13': 'Grupo 7',
+            '14': 'Grupo 8',
 
         },
         defaultProperties: defaultFieldList(),
@@ -78,30 +85,48 @@ export const defaultState = (() => {
         chartNames: defaultChartNames(),
         chartSelected: '',
         //
+        filterList: defaultFilters(),
+        filterNames: defaultFilterNames(),
+        //
         processing: false,
         loading: false,
         loaded: false,
         clicks: 0,
         dataSize: 0,
     };
-    for(let k in ds.chartList){
-        if(ds.chartList[k].isDefault){
-            ds.chartSelected=k;
+    for (let k in ds.chartList) {
+        if (ds.chartList[k].isDefault) {
+            ds.chartSelected = k;
             break;
         }
     }
     return ds;
 })();
 
+const materialFilter = (filters) => {
+    let f = [];
+    for (let k in filters) {
+        if (op.get(filters, [k, 'enabled']))
+            f.push(filters[k]);
+    }
+    return ((v) => {
+        return true;
+    });
+};
+
 // carrega dados das DSs selecionadas
 function* loadData(action) {
     try {
+        let filter = yield select(s => s.handyProps.filterList);
         yield put({
             type: act.hpSetState, toSet: {
                 processing: true,
             }
         });
-        const data = yield call(db.listMaterials(), data => data);
+        const data = yield call(db.listMaterials(
+            // materialFilter(filter)
+            ()=>true
+        ), data => data);
         yield put({
             type: act.hpSetState, toSet: {
                 processing: false,
@@ -200,13 +225,20 @@ function* HP_LOADED(action) {
     }
 }
 
+function* StateTraps(action) {
+    if (true) {
+
+    }
+}
+
+
 export const sagas = [
     (function* () {
         yield takeEvery(act.hp.loadData, loadData);
     })(),
-    // (function* () {
-    //     yield takeEvery(act.hp.loadDataSources, loadDataSources);
-    // })(),
+    (function* () {
+        yield takeEvery(act.hp.toSet, StateTraps);
+    })(),
     (function* () {
         yield takeEvery(act.hp.getDataSource, getDataSource);
     })(),

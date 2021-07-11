@@ -135,7 +135,6 @@ function App() {
         if (component === "filter") {
             return <>
                 <Filtro/>
-                {data.length}
             </>;
         }
         if (component === "chart") {

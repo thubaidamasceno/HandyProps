@@ -144,4 +144,39 @@ export const defaultCharts = () => {
 
 export const defaultChartNames = () => chartList.map(b => slugify(b.name, '_'));
 
+export const filterOperations={
+neq:{name:'diferente',symbol:'!='},
+eq:{name:'igual',symbol:'=='},
+gte:{name:'maior ou igual',symbol:'>='},
+lte:{name:'menor ou igual',symbol:'<='} ,
+gt:{name:'maior',symbol:'>'},
+lt:{name:'menor',symbol:'<'} ,
+}
+
+const filterList = [
+    {
+        name: 'Densidade Máxima',
+        field: 'Density',
+        operator: 'lte',
+        value: 8,
+        enabled: false,
+    },
+    {
+        name: 'Mínimo Módulo de Young',
+        field: 'YoungModulus',
+        operator: 'gte',
+        value: 200,
+        enabled: true,
+    },
+];
+export const defaultFilters = () => {
+    return filterList.reduce((a, b) => {
+        let slug = slugify(b.name, '_');
+        a[slug] = {...b, slug};
+        return a;
+    }, {});
+};
+
+export const defaultFilterNames = () => filterList.map(b => slugify(b.name, '_'));
+
 export default fields;

@@ -1,47 +1,117 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import {useDispatch, useSelector} from 'react-redux';
+import * as op from "object-path";
+import {act} from "./modconf";
+import fields, {filterOperations} from './fields';
+
+import {makeStyles} from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
-    HOME_PAGE_LOADED,
-    HOME_PAGE_UNLOADED,
-    APPLY_TAG_FILTER
-} from '../../constants/actionTypes';
+    ListItemText, ListItemSecondaryAction, IconButton, Checkbox, ListItemIcon,
+    Link, ListItem, Button, List
+} from "@material-ui/core";
+import CommentIcon from '@material-ui/icons/Comment';
 
-const Promise = global.Promise;
 
-const mapStateToProps = state => ({
-    ...state.home,
-    appName: state.common.appName,
-    token: state.common.token
-});
+const useStyles = makeStyles((theme) => ({
+        root: {
+            width: '100%',
+            display: 'block',
+        },
+        heading: {
+            fontSize: theme.typography.pxToRem(15),
+            fontWeight: theme.typography.fontWeightRegular,
+        },
+        buttonLink: {
+            fontSize: 'small',
+            textDecoration: 'underline',
+            marginRight: '0.5em',
+            cursor: 'pointer',
+            '&$disabled': {
+                color: 'gray',
+            },
+            '&$enabled': {
+                color: 'blue',
+            },
+        },
+        disabled: {},
+        enabled: {},
+        inputbox: {
+            width: '100%',
+        },
+    }))
+;
 
-const mapDispatchToProps = dispatch => ({
-    onClickTag: (tag, pager, payload) =>
-        dispatch({type: APPLY_TAG_FILTER, tag, pager, payload}),
-    onLoad: (tab, pager, payload) =>
-        dispatch({type: HOME_PAGE_LOADED, tab, pager, payload}),
-    onUnload: () =>
-        dispatch({type: HOME_PAGE_UNLOADED})
-});
+function Properties() {
+    const dispatch = useDispatch();
+    const classes = useStyles();
+    //
+    const filterList = useSelector(state => op.get(state, `handyProps.filterList`));
+    const filterNames = useSelector(state => op.get(state, `handyProps.filterNames`));
+    const loaded = useSelector(state => op.get(state, `handyProps.loaded`));
+    //
+    const [checked, setChecked] = React.useState([0]);
 
-class Home extends React.Component {
-    render() {
-        return (
-            <div className="row" style={{width: "100%", backgroundColor: 'blue'}}>
-                <div className="col">
+    const handleToggle = value => () => {
+        const isChecked = !op.get(filterList, [value, 'enabled']);
+        dispatch({
+            type: act.hpSetState,
+            toSet: {
+                filterList: {
+                    [value]: {
+                        enabled: isChecked
+                    }
+                }
+            }
+        })
+    };
 
-                    <div className="">
-                        Filtro
-                    </div>
-
-                    <div className="">
-                        <input/>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    return (
+        <div className={classes.root}>
+            <List dense>
+                <ListItem
+                    dense
+                > <Button
+                    className={classes.buttonLink}
+                    onClick={() => {
+                    }}
+                >Novo Filtro</Button></ListItem>
+                {filterNames.map(
+                    v => (
+                        <ListItem key={v}
+                                  dense
+                                  onClick={handleToggle(v)}
+                        >
+                            <ListItemIcon>
+                                <Checkbox
+                                    edge="start"
+                                    tabIndex={-1}
+                                    checked={filterList[v].enabled}
+                                    disableRipple
+                                />
+                            </ListItemIcon>
+                            <ListItemText
+                                id={v}
+                                primary={filterList[v].name}
+                                secondary={`${
+                                    op.get(filterOperations, [filterList[v].operator, 'name'], '')
+                                } a ${
+                                    filterList[v].value
+                                } ${
+                                    op.get(fields, [filterList[v].field, 'unid'])
+                                }`}
+                            />
+                        </ListItem>
+                    )
+                )}
+            </List>
+        </div>
+    );
 }
 
-const expd = connect(mapStateToProps, mapDispatchToProps)(Home);
-
-export default expd;
+export default Properties;
