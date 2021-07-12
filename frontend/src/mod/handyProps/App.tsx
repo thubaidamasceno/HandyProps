@@ -166,15 +166,8 @@ function App() {
                 model={model}
                 factory={factory}
             />
-            <EditDialog
-                txt={`Renomear '${'this.props.name'}' como`}
-                visibleP='renaming'
-                yesDisP='invalidRename'
-                closeAct='editClose'
-                inputP='renameText'
-                noAct='renameClose'
-                errorTxt='renameErrors'/>
-        </>);
+        </>)
+        ;
 }
 
 

@@ -106,8 +106,21 @@ function DataSource() {
                             })}
                             disabled={processing}
                             className={classes.buttonLink}
-                        >Atualizar</Button>
+                        >Carregar da Internet</Button>
                     </div>}
+                    <div>
+                        <Button
+                            className={classes.buttonLink}
+                            onClick={() => {
+                            }}
+                        >Baixar Dados em Arquivo</Button>
+                    </div>
+                    <div>
+                        <Button
+                            className={classes.buttonLink}
+                            onClick={() => {
+                            }}
+                        >Arir Dados de Arquivo</Button></div>
 
                 </AccordionDetails>
             </Accordion>

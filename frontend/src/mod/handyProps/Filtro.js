@@ -17,6 +17,8 @@ import {
 } from "@material-ui/core";
 import CommentIcon from '@material-ui/icons/Comment';
 import EditIcon from '@material-ui/icons/Edit';
+import {Layout} from "flexlayout-react";
+import EditDialog from "./EditDialog";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -83,7 +85,7 @@ function Properties() {
                     }}
                 >Novo Filtro</Button></ListItem>
                 {filterNames.map(
-                    v => (
+                    (v, i) => (
                         <ListItem key={v}
                                   dense
                                   onClick={handleToggle(v)}
@@ -99,19 +101,39 @@ function Properties() {
                             <ListItemText
                                 id={v}
                                 primary={filterList[v].name}
-                                secondary={`${
-                                    op.get(filterOperations, [filterList[v].operator, 'name'], '')
-                                } a ${
-                                    filterList[v].value
-                                } ${
-                                    op.get(fields, [filterList[v].field, 'unid'])
-                                }`}/>
+                                secondary={filterList[v].expression}
+                                // secondary={`${
+                                //     op.get(filterOperations, [filterList[v].operator, 'name'], '')
+                                // } a ${
+                                //     filterList[v].value
+                                // } ${
+                                //     op.get(fields, [filterList[v].field, 'unid'])
+                                // }`}
+                            />
 
                             <ListItemSecondaryAction>
                                 <IconButton edge="end" aria-label="Comments"
-                                onClick={()=>{
-                                    dispatch({type:act.EditDialog,act:'askEdit'})
-                                }}
+                                            onClick={() => {
+                                                dispatch({
+                                                    type: act.hpSetState, toSet: {
+                                                        editDialog: {
+                                                            visible: true,
+                                                            title: "Editar Filtro",
+                                                            closeAct: 'editClose',
+                                                            inputP: 'content',
+                                                            content: JSON.stringify({
+                                                                name: filterList[v].name,
+                                                                // operator: filterList[v].operator,
+                                                                // field: filterList[v].field,
+                                                                // value: filterList[v].value,
+                                                                expression: filterList[v].expression,
+                                                                fields: filterList[v].fields,
+                                                            }, undefined, 4),
+                                                            path: `filterList.${v}`,
+                                                        }
+                                                    }
+                                                })
+                                            }}
                                 >
                                     <EditIcon/>
                                 </IconButton>
@@ -121,6 +143,16 @@ function Properties() {
                     )
                 )}
             </List>
+
+            <EditDialog
+                // txt={`Editar Filtro`}
+                // visibleP='renaming'
+                // yesDisP='invalidRename'
+                // closeAct='editClose'
+                // inputP='renameText'
+                // noAct='renameClose'
+                // errorTxt='renameErrors'
+            />
         </div>
     );
 }

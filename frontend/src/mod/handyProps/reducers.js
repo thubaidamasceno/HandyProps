@@ -61,23 +61,13 @@ export const defaultState = (() => {
             '0': 'rgba(188,188,188,0.6)',
 
         },
-        colorLabels: {
-            '0': 'Others (Outros)',
-            '1': 'Foams (Espumas)',
-            '2': 'Grupo 2',
-            '3': 'Não Metais',
-            '4': 'Vidros ',
-            '5': 'Elastômeros',
-            '6': 'Grupo 3',
-            '7': 'Madeiras',
-            '8': 'Grupo 4',
-            '9': 'Materiais de construção',
-            '10': 'Grupo 5',
-            '11': 'Grupo 6',
-            '13': 'Grupo 7',
-            '14': 'Grupo 8',
+        colorLabels: (() => {
+            let v = {};
+            for (let g = 0; g < 15; g++)
+                v[g.toString()] = `Grupo ${g}`;
+            return v;
+        })(),
 
-        },
         defaultProperties: defaultFieldList(),
         customProperties: [],
         columnsAG: [],
@@ -111,25 +101,29 @@ const materialFilter = (filters) => {
         if (op.get(filters, [k, 'enabled'])) {
             f.push({
                 ...filters[k],
-                ev: expr.Parser.parse(`${
-                    op.get(filters, [k, 'field'], 'field')
-                } ${
-                    op.get(filterOperations, [op.get(filters, [k, 'operator']), 'symbol'], 'symbol')
-                } ${
-                    op.get(filters, [k, 'value'], 'value')
-                }`)
+                // ev: expr.Parser.parse(`${
+                //     op.get(filters, [k, 'field'], 'field')
+                // } ${
+                //     op.get(filterOperations, [op.get(filters, [k, 'operator']), 'symbol'], 'symbol')
+                // } ${
+                //     op.get(filters, [k, 'value'], 'value')
+                // }`),
+                ev: expr.Parser.parse(op.get(filters, [k, 'expression'], 'false')),
             });
         }
     }
     return ((v) => {
         return f.every(filter => {
-            // console.log(filter)
-            return filter.ev.evaluate({
-                [filter.field]: op.get(v, filter.field),
-            })
+            let fields_ = op.get(filter, 'fields', []);
+            let variables = fields_.reduce(
+                (acc, curr) => {
+                    return {...acc, [curr]: op.get(v, curr)};
+                }, {});
+            return filter.ev.evaluate(variables)
         });
     });
 };
+
 
 // carrega dados das DSs selecionadas
 function* loadData(action) {

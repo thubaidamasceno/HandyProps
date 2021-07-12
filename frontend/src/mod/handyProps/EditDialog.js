@@ -18,28 +18,31 @@ const EditDialog = (propx) => {
             ...propx,
             ...op.get(state, 'handyProps.editDialog', {})
         }));
-        const visible = useSelector(state => op.get(state, 'handyProps.editDialog', false));
-        // const onChangeRename = (ev) => {
-        //     let p = {
-        //         // act: 'validRename',
-        //         id: props.id,
-        //         name: op.get(ev, 'target.value', null),
-        //     };
-        //     // this.props.onAct(p, apiActs.askRename(p));
-        //     props.onAct({...p, act: 'changeRename'});
-        //
-        // };
+        // const props = {...propx, onAct};
+        const visible = useSelector(state => op.get(state, 'handyProps.editDialog.visible', false));
+        const onChangeRename = (ev) => {
+            let p = {
+                // act: 'validRename',
+                id: props.id,
+                name: op.get(ev, 'target.value', null),
+            };
+            // this.props.onAct(p, apiActs.askRename(p));
+            props.onAct({...p, act: 'changeEdit'});
+
+        };
 
         return (
             <Dialog
-                visible={visible}
-                animation="zoom"
-                maskAnimation="fade"
+                title={props.title || "Editar"}
+                visible={props.visible}
+                // animation="zoom"
+                // maskAnimation="fade"
                 closable
-                // onClose={props.onClose || (() => props.onAct({act: props.closeAct}))}
+                onClose={(() => props.onAct({act: props.closeAct}))}
+                // maskClosabled
                 destroyOnClose
                 zIndex={2000}
-                style={{display:visible?'block':'none'}}
+                // style={{display: visible ? 'block' : 'none'}}
             >
                 <div
                     //className='dialog dialog-input'
@@ -51,12 +54,13 @@ const EditDialog = (propx) => {
                         < textarea
                             style={{width: '100%'}}
                             autoFocus
-                            // onChange={props.onChange || onChangeRename}
+                            onChange={props.onChange || onChangeRename}
+                            rows={props.inputRows || 8}
                             value={props[props.inputP]}
                         /></div>
                     <div>
                         < button
-                            disabled={props.yesDisabled || op.get(props, props.yesDisP, false)}
+                            // disabled={props.yesDisabled || op.get(props, props.yesDisP, false)}
                             onClick={(
                                 ev) => (
                                 props.clickYes ? (ev) => props.clickYes(props, ev) :

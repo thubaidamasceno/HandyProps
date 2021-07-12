@@ -160,6 +160,8 @@ const filterList = [
         operator: 'lte',
         value: 8,
         enabled: false,
+        fields:['Density'],
+        expression:'Density < 8'
     },
     {
         name: 'Mínimo Módulo de Young',
@@ -167,6 +169,8 @@ const filterList = [
         operator: 'gte',
         value: 200,
         enabled: false,
+        fields:['YoungModulus'],
+        expression:'YoungModulus >= 200'
     },
 ];
 export const defaultFilters = () => {
