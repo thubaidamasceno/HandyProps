@@ -335,6 +335,19 @@ const reducerBase = (state = defaultState, action) => {
                             visible: false,
                         },
                     };
+                case 'editFilterYes':
+                    let tomerge = {};
+                    try{
+                        tomerge = JSON.parse(state.content);
+                    }
+                    catch{}
+                    return {
+                        ...state,
+                        editDialog: {
+                            ...state.editDialog,
+                            visible: false,
+                        },
+                    };
                 case 'validEdit':
                     return {
                         ...state,

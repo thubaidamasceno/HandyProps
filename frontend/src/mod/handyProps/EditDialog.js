@@ -21,14 +21,13 @@ const EditDialog = (propx) => {
         // const props = {...propx, onAct};
         const visible = useSelector(state => op.get(state, 'handyProps.editDialog.visible', false));
         const onChangeRename = (ev) => {
-            let p = {
-                // act: 'validRename',
-                id: props.id,
-                name: op.get(ev, 'target.value', null),
-            };
-            // this.props.onAct(p, apiActs.askRename(p));
-            props.onAct({...p, act: 'changeEdit'});
-
+            dispatch({
+                type: act.hpSetState, toSet: {
+                    editDialog: {
+                        [props.inputP]: op.get(ev, 'target.value', null),
+                    }
+                }
+            });
         };
 
         return (
@@ -61,10 +60,9 @@ const EditDialog = (propx) => {
                     <div>
                         < button
                             // disabled={props.yesDisabled || op.get(props, props.yesDisP, false)}
-                            onClick={(
-                                ev) => (
+                            onClick={() => (
                                 props.clickYes ? (ev) => props.clickYes(props, ev) :
-                                    (() => props.onAct({act: props.yesAct})))
+                                    (() => props.onAct({act: props.yesAct}))())
                             }> Confirmar
                         </button>
                         < button

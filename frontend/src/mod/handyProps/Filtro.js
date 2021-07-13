@@ -130,6 +130,7 @@ function Properties() {
                                                                 fields: filterList[v].fields,
                                                             }, undefined, 4),
                                                             path: `filterList.${v}`,
+                                                            yesAct:'editFilterYes',
                                                         }
                                                     }
                                                 })
