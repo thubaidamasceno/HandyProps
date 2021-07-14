@@ -158,34 +158,6 @@ function* loadData(action) {
     }
 }
 
-// // Carerega lista de DS
-// function* loadDataSources(action) {
-//     try {
-//         yield put({
-//             type: act.hpSetState, toSet: {
-//                 processing: true,
-//             }
-//         });
-//         const data = yield call(db.listMaterials(), data => data);
-//         yield put({
-//             type: act.hpSetState, toSet: {
-//                 processing: false,
-//                 loaded: true,
-//                 dataSize: data && data.length || 0,
-//                 data
-//             }
-//         });
-//     } catch (e) {
-//         yield put({type: "USER_FETCH_FAILED", message: e.message});
-//         yield put({
-//             type: act.hpSetState, toSet: {
-//                 processing: true,
-//                 dataSize: 0, data: []
-//             }
-//         });
-//     }
-// }
-
 // Careerga DS espcífica, via lista de URLs
 function* getDataSource(action) {
     try {
@@ -247,6 +219,26 @@ function* StateTraps(action) {
 }
 
 
+function* sagaEditDialog(action) {
+    if (action.act === 'editFilterYes') {
+        let editDialog = yield select(s => s.handyProps.editDialog);
+        let tomerge = {}, stx = {};
+        try {
+            tomerge = JSON.parse(editDialog.content);
+        } catch {
+        }
+        let toSet = im.merge(
+            {'editDialog': {visible: false}},
+            editDialog.path,
+            tomerge
+        );
+        yield put({type: act.hpSetState, toSet});
+    }
+
+    yield true;
+}
+
+
 export const sagas = [
     (function* () {
         yield takeEvery(act.hp.loadData, loadData);
@@ -259,6 +251,9 @@ export const sagas = [
     })(),
     (function* () {
         yield takeEvery(act.HP_LOADED, HP_LOADED);
+    })(),
+    (function* () {
+        yield takeEvery(act.EditDialog, sagaEditDialog);
     })(),
 ];
 
@@ -335,19 +330,16 @@ const reducerBase = (state = defaultState, action) => {
                             visible: false,
                         },
                     };
-                case 'editFilterYes':
-                    let tomerge = {};
-                    try{
-                        tomerge = JSON.parse(state.content);
-                    }
-                    catch{}
-                    return {
-                        ...state,
-                        editDialog: {
-                            ...state.editDialog,
-                            visible: false,
-                        },
-                    };
+                // case 'editFilterYes':
+                //     let tomerge = {}, stx = {};
+                //     try {
+                //         tomerge = JSON.parse(state.editDialog.content);
+                //     } catch {
+                //     }
+                //     stx = im.merge(state, state.editDialog.path, tomerge);
+                //     stx = im.merge(stx, 'editDialog', {visible: false});
+                //     console.log(stx);
+                //     return stx;
                 case 'validEdit':
                     return {
                         ...state,
@@ -355,7 +347,7 @@ const reducerBase = (state = defaultState, action) => {
                 default:
                     return state;
             }
-            ;
+            return state;
         case   act.HP_ACT.createDB:
             let xAct = action.p ? action.p.act : '';
             switch (xAct) {

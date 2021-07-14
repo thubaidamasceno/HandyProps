@@ -123,9 +123,6 @@ function Properties() {
                                                             inputP: 'content',
                                                             content: JSON.stringify({
                                                                 name: filterList[v].name,
-                                                                // operator: filterList[v].operator,
-                                                                // field: filterList[v].field,
-                                                                // value: filterList[v].value,
                                                                 expression: filterList[v].expression,
                                                                 fields: filterList[v].fields,
                                                             }, undefined, 4),

@@ -57,6 +57,10 @@ const EditDialog = (propx) => {
                             rows={props.inputRows || 8}
                             value={props[props.inputP]}
                         /></div>
+                    <span>Saiba mais sobre a sintaxe usada para expressões matemáticas em <a
+                        href="https://github.com/silentmatt/expr-eval#expression-syntax"
+                        target="_blank"
+                    >https://github.com/silentmatt/expr-eval#expression-syntax</a></span>
                     <div>
                         < button
                             // disabled={props.yesDisabled || op.get(props, props.yesDisP, false)}

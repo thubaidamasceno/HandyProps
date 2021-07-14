@@ -5,7 +5,7 @@ var dataSourcesList = store2.get('handyPropsDataSource')
 
 if (!dataSourcesList) {
     store2.set('handyPropsDataSource',
-        'https://demo.handyprops.damasceno.pro/public/defaultMaterialDatabase.v1.json'
+        'https://demo.handyprops.damasceno.pro/public/HandyPropsData.json'
     )
 }
 

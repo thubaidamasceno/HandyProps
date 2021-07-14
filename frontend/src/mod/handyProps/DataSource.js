@@ -108,19 +108,19 @@ function DataSource() {
                             className={classes.buttonLink}
                         >Carregar da Internet</Button>
                     </div>}
-                    <div>
-                        <Button
-                            className={classes.buttonLink}
-                            onClick={() => {
-                            }}
-                        >Baixar Dados em Arquivo</Button>
-                    </div>
-                    <div>
-                        <Button
-                            className={classes.buttonLink}
-                            onClick={() => {
-                            }}
-                        >Arir Dados de Arquivo</Button></div>
+                    {/*<div>*/}
+                    {/*    <Button*/}
+                    {/*        className={classes.buttonLink}*/}
+                    {/*        onClick={() => {*/}
+                    {/*        }}*/}
+                    {/*    >Baixar Dados em Arquivo</Button>*/}
+                    {/*</div>*/}
+                    {/*<div>*/}
+                    {/*    <Button*/}
+                    {/*        className={classes.buttonLink}*/}
+                    {/*        onClick={() => {*/}
+                    {/*        }}*/}
+                    {/*    >Arir Dados de Arquivo</Button></div>*/}
 
                 </AccordionDetails>
             </Accordion>
@@ -167,26 +167,27 @@ function DataSource() {
                             /></>}
                         </div>
 
-                            <div>
-                                <Button
-                                    className={classes.buttonLink}
-                                    onClick={() => {
-                                    }}
-                                >Baixar .csv para Excel</Button>
-                            </div>
-                        <div>
-                            <Button
-                                className={classes.buttonLink}
-                                onClick={() => {
-                                }}
-                            >Salvar e Baixar Projeto</Button>
+                        {/*    <div>*/}
+                        {/*        <Button*/}
+                        {/*            className={classes.buttonLink}*/}
+                        {/*            onClick={() => {*/}
+                        {/*            }}*/}
+                        {/*        >Baixar .csv para Excel</Button>*/}
+                        {/*    </div>*/}
+                        {/*<div>*/}
+                        {/*    <Button*/}
+                        {/*        className={classes.buttonLink}*/}
+                        {/*        onClick={() => {*/}
+                        {/*        }}*/}
+                        {/*    >Salvar e Baixar Projeto</Button>*/}
+                        {/*</div>*/}
+                        {/*<div>*/}
+                        {/*    <Button*/}
+                        {/*        className={classes.buttonLink}*/}
+                        {/*        onClick={() => {*/}
+                        {/*        }}*/}
+                        {/*    >Abrir Projeto Salvo</Button></div>*/}
                         </div>
-                        <div>
-                            <Button
-                                className={classes.buttonLink}
-                                onClick={() => {
-                                }}
-                            >Abrir Projeto Salvo</Button></div></div>
                     </>
                 </AccordionDetails>
             </Accordion>
