@@ -29,6 +29,8 @@ const txt = {
 //
 var _act = {
     hpSetState: '',
+    hpExportState: '',
+    hpImportState: '',
     hp: {
         loadData: 0,
         // loadDataSources: 0,

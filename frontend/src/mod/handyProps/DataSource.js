@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {useDispatch, useSelector} from 'react-redux';
 import * as op from "object-path";
@@ -52,6 +52,7 @@ function DataSource() {
     const urlDSListState = useSelector(state => op.get(state, `handyProps.DS.urlDSList`));
     const [urlDSList, setUrlDSList] = useState(urlDSListState);
     const classes = useStyles();
+    const inputFile = useRef(null);
 
     const reset = () => {
         setUrlDSList(urlDSListDefault);
@@ -157,36 +158,58 @@ function DataSource() {
                 </AccordionSummary>
                 <AccordionDetails>
                     <>
-                        <div style={{display:'flex',flexDirection:'column'}}>
-                        <div>
-                            <center> {loaded ? <>
-                                {`${data.length} materiais selecionados`}
-                            </> : "Não há Materiais Selecionados"}</center>
-                            {processing && <><p/><CircularProgress
-                                size={20}
-                            /></>}
-                        </div>
+                        <div style={{display: 'flex', flexDirection: 'column'}}>
+                            <div>
+                                <center> {loaded ? <>
+                                    {`${data.length} materiais selecionados`}
+                                </> : "Não há Materiais Selecionados"}</center>
+                                {processing && <><p/><CircularProgress
+                                    size={20}
+                                /></>}
+                            </div>
 
-                        {/*    <div>*/}
-                        {/*        <Button*/}
-                        {/*            className={classes.buttonLink}*/}
-                        {/*            onClick={() => {*/}
-                        {/*            }}*/}
-                        {/*        >Baixar .csv para Excel</Button>*/}
-                        {/*    </div>*/}
-                        {/*<div>*/}
-                        {/*    <Button*/}
-                        {/*        className={classes.buttonLink}*/}
-                        {/*        onClick={() => {*/}
-                        {/*        }}*/}
-                        {/*    >Salvar e Baixar Projeto</Button>*/}
-                        {/*</div>*/}
-                        {/*<div>*/}
-                        {/*    <Button*/}
-                        {/*        className={classes.buttonLink}*/}
-                        {/*        onClick={() => {*/}
-                        {/*        }}*/}
-                        {/*    >Abrir Projeto Salvo</Button></div>*/}
+                            <div>
+                                <Button
+                                    className={classes.buttonLink}
+                                    onClick={() => {
+                                        dispatch({
+                                            type: act.hpSetState,
+                                            toSet: {exportCSV: true}
+                                        })
+                                    }}
+                                >Baixar .csv para Excel</Button>
+                            </div>
+                            <div>
+                                <Button
+                                    className={classes.buttonLink}
+                                    onClick={() => {
+                                        dispatch({
+                                            type: act.hpExportState,
+                                        })
+                                    }}
+                                >Salvar e Baixar Projeto</Button>
+                            </div>
+                            <input type='file' id='file' ref={inputFile} style={{display: 'none'}}
+                                   onChange={
+                                       event => {
+                                           event.stopPropagation();
+                                           event.preventDefault();
+                                           const reader = new FileReader()
+                                           reader.onload = ev => dispatch({
+                                               type: act.hpImportState,
+                                               file: ev.target.result
+                                           });
+                                           reader.readAsText(event.target.files[0])
+                                       }
+                                   }
+                            />
+                            <div>
+                                <Button
+                                    className={classes.buttonLink}
+                                    onClick={() => {
+                                        inputFile.current.click();
+                                    }}
+                                >Abrir Projeto Salvo</Button></div>
                         </div>
                     </>
                 </AccordionDetails>

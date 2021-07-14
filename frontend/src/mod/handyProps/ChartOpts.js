@@ -71,6 +71,26 @@ function Properties() {
                 > <Button
                     className={classes.buttonLink}
                     onClick={() => {
+                        dispatch({
+                            type: act.hpSetState, toSet: {
+                                editDialog: {
+                                    visible: true,
+                                    title: "Novo Gráfico",
+                                    closeAct: 'editClose',
+                                    inputP: 'content',
+                                    content: JSON.stringify({
+                                        "name": "Módulo de Young vs Razão de Poisson",
+                                        "axisX": "YoungModulus",
+                                        "axisY": "PoissonRatio",
+                                        "isXlog": true,
+                                        "isYlog": true,
+                                    }, undefined, 4),
+                                    //path: `filterList.${v}`,
+                                    yesAct: 'editChartNew',
+                                    msg:'chart'
+                                }
+                            }
+                        })
                     }}
                 >Novo Gráfico</Button></ListItem>
                 {chartNames.map(
@@ -96,7 +116,25 @@ function Properties() {
                                 }
                             />
                             <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="Comments">
+                                <IconButton edge="end" aria-label="Comments"
+                                            onClick={() => {
+                                                dispatch({
+                                                    type: act.hpSetState, toSet: {
+                                                        editDialog: {
+                                                            visible: true,
+                                                            title: "Editar Gráfico",
+                                                            closeAct: 'editClose',
+                                                            inputP: 'content',
+                                                            content: JSON.stringify(
+                                                                chartList[v],
+                                                                undefined, 4),
+                                                            path: `chartList.${v}`,
+                                                            yesAct: 'editFilterYes',
+                                                            msg: 'chart'
+                                                        }
+                                                    }
+                                                })
+                                            }}>
                                     <EditIcon/>
                                 </IconButton>
                             </ListItemSecondaryAction>

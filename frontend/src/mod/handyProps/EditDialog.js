@@ -57,10 +57,16 @@ const EditDialog = (propx) => {
                             rows={props.inputRows || 8}
                             value={props[props.inputP]}
                         /></div>
+                    {props.msg === 'filter' &&
                     <span>Saiba mais sobre a sintaxe usada para expressões matemáticas em <a
                         href="https://github.com/silentmatt/expr-eval#expression-syntax"
                         target="_blank"
-                    >https://github.com/silentmatt/expr-eval#expression-syntax</a></span>
+                    >https://github.com/silentmatt/expr-eval#expression-syntax</a></span>}
+                    {props.msg === 'chart' &&
+                    <span>Saiba mais sobre a sintaxe usada para definir gráficos <a
+                        href="https://www.chartjs.org/docs/latest/"
+                        target="_blank"
+                    >https://www.chartjs.org/docs/latest/</a></span>}
                     <div>
                         < button
                             // disabled={props.yesDisabled || op.get(props, props.yesDisP, false)}

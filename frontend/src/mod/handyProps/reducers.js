@@ -17,6 +17,8 @@ import {
     defaultFilterNames,
     filterOperations,
 } from './fields';
+import slugify from "slugify";
+import FileSaver from "file-saver";
 
 export const apiActs = {
     list: p => {
@@ -234,6 +236,53 @@ function* sagaEditDialog(action) {
         );
         yield put({type: act.hpSetState, toSet});
     }
+    if (action.act === 'editFilterNew') {
+        let editDialog = yield select(s => s.handyProps.editDialog);
+        let filterNames = yield select(s => s.handyProps.filterNames);
+        let tomerge = {}, stx = {};
+        try {
+            tomerge = JSON.parse(editDialog.content);
+        } catch {
+        }
+        let slug = slugify(tomerge.name, '_');
+        if (filterNames.filter(v => v === slug).length === 0) {
+            filterNames = [...filterNames, slug];
+            let toSet = im.merge(
+                {
+                    'editDialog': {visible: false},
+                    filterNames
+                },
+                `filterList.${slug}`,
+                tomerge
+            );
+            yield put({type: act.hpSetState, toSet});
+
+        } else window.alert('Nome Inválido');
+    }
+
+    if (action.act === 'editChartNew') {
+        let editDialog = yield select(s => s.handyProps.editDialog);
+        let chartNames = yield select(s => s.handyProps.chartNames);
+        let tomerge = {}, stx = {};
+        try {
+            tomerge = JSON.parse(editDialog.content);
+        } catch {
+        }
+        let slug = slugify(tomerge.name, '_');
+        if (chartNames.filter(v => v === slug).length === 0) {
+            chartNames = [...chartNames, slug];
+            let toSet = im.merge(
+                {
+                    'editDialog': {visible: false},
+                    chartNames
+                },
+                `chartList.${slug}`,
+                tomerge
+            );
+            yield put({type: act.hpSetState, toSet});
+
+        } else window.alert('Nome Inválido');
+    }
 
     yield true;
 }
@@ -310,6 +359,26 @@ const reducerBase = (state = defaultState, action) => {
                 default:
                     return state;
             }
+        case   act.hpExportState:
+            let gBlob = new Blob([JSON.stringify({
+                DS: state.DS,
+                chartList: state.chartList,
+                chartNames: state.chartNames,
+                filterList: state.filterList,
+                filterNames: state.filterNames,
+                gridColumns: state.gridColumns,
+            })], {type: "application/json"});
+            FileSaver.saveAs(gBlob, "Configurações_HandyProps_.json");
+            return state;
+        case   act.hpImportState:
+            let conf = {};
+            try {
+                conf = JSON.parse(action.file);
+            } catch (e){
+                console.log(e);
+            }
+            console.log(conf);
+            return im.merge(state, '', conf);
 
         case   act.EditDialog:
             v.act = action.act;
@@ -329,20 +398,6 @@ const reducerBase = (state = defaultState, action) => {
                             ...state.editDialog,
                             visible: false,
                         },
-                    };
-                // case 'editFilterYes':
-                //     let tomerge = {}, stx = {};
-                //     try {
-                //         tomerge = JSON.parse(state.editDialog.content);
-                //     } catch {
-                //     }
-                //     stx = im.merge(state, state.editDialog.path, tomerge);
-                //     stx = im.merge(stx, 'editDialog', {visible: false});
-                //     console.log(stx);
-                //     return stx;
-                case 'validEdit':
-                    return {
-                        ...state,
                     };
                 default:
                     return state;

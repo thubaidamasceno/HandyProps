@@ -166,6 +166,15 @@ function App() {
                 model={model}
                 factory={factory}
             />
+            <EditDialog
+                // txt={`Editar Filtro`}
+                // visibleP='renaming'
+                // yesDisP='invalidRename'
+                // closeAct='editClose'
+                // inputP='renameText'
+                // noAct='renameClose'
+                // errorTxt='renameErrors'
+            />
         </>)
         ;
 }

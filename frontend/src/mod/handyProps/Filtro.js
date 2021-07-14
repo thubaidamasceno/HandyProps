@@ -82,6 +82,26 @@ function Properties() {
                 > <Button
                     className={classes.buttonLink}
                     onClick={() => {
+                        dispatch({
+                            type: act.hpSetState, toSet: {
+                                editDialog: {
+                                    visible: true,
+                                    title: "Novo Filtro",
+                                    closeAct: 'editClose',
+                                    inputP: 'content',
+                                    content: JSON.stringify({
+                                        "name": "Nome do Filtro",
+                                        "expression": "YoungModulus >= 300",
+                                        "fields": [
+                                            "YoungModulus"
+                                        ]
+                                    }, undefined, 4),
+                                    //path: `filterList.${v}`,
+                                    yesAct:'editFilterNew',
+                                    msg:'filter'
+                                }
+                            }
+                        })
                     }}
                 >Novo Filtro</Button></ListItem>
                 {filterNames.map(
@@ -128,6 +148,7 @@ function Properties() {
                                                             }, undefined, 4),
                                                             path: `filterList.${v}`,
                                                             yesAct:'editFilterYes',
+                                                            msg:'filter'
                                                         }
                                                     }
                                                 })
@@ -142,15 +163,6 @@ function Properties() {
                 )}
             </List>
 
-            <EditDialog
-                // txt={`Editar Filtro`}
-                // visibleP='renaming'
-                // yesDisP='invalidRename'
-                // closeAct='editClose'
-                // inputP='renameText'
-                // noAct='renameClose'
-                // errorTxt='renameErrors'
-            />
         </div>
     );
 }

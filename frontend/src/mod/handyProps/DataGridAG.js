@@ -27,6 +27,7 @@ const numberFormatter = (params) => {
 
 
 function _DataGrid() {
+    const exportCSV = useSelector(state => op.get(state, `handyProps.exportCSV`));
     const processing = useSelector(state => op.get(state, `handyProps.processing`));
     const loaded = useSelector(state => op.get(state, `handyProps.loaded`));
     const dataSize = useSelector(state => op.get(state, `handyProps.dataSize`));
@@ -38,12 +39,17 @@ function _DataGrid() {
     const [gridColumnApi, setGridColumnApi] = useState(null);
 
     useEffect(() => {
-        // let p = {
-        //     type: act.hp.loadDataSources,
-        //     // payload: apiActs.list({}),
-        // };
-        // dispatch(p);
-    }, []);
+        if (exportCSV) {
+            var params = {
+                columnSeparator: ';',
+            };
+            gridApi.exportDataAsCsv(params);
+            dispatch({
+                type: act.hpSetState,
+                toSet: {exportCSV: false}
+            })
+        }
+    }, [exportCSV]);
 
     const columns = (f => {
         let r = [];
