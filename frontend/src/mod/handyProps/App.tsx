@@ -18,6 +18,7 @@ import Properties from './Properties';
 import ChartOpts from './ChartOpts';
 import GridOpts from './GridOpts';
 import Opts from './Opts';
+import Tree from './Tree';
 
 
 var json: IJsonModel = {
@@ -106,8 +107,8 @@ var json: IJsonModel = {
                 // {
                 //     "type": "tab",
                 //     "enableClose": false,
-                //     "name": "Opções",
-                //     "component": "opts"
+                //     "name": "Agrupamento",
+                //     "component": "tree"
                 // },
             ]
         }
@@ -157,6 +158,9 @@ function App() {
         }
         if (component === "opts") {
             return <Opts/>;
+        }
+        if (component === "tree") {
+            return <Tree/>;
         }
     };
 

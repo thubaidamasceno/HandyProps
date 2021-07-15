@@ -19,6 +19,7 @@ import {
 } from './fields';
 import slugify from "slugify";
 import FileSaver from "file-saver";
+import traduz from "./traduz";
 
 export const apiActs = {
     list: p => {
@@ -42,7 +43,7 @@ export const defaultState = (() => {
     let getHandyPropsDataSource = db.getHandyPropsDataSource();
     let ds = {
         DS: {
-            urlDSListDefault: getHandyPropsDataSource,
+            urlDSListDefault: 'https://demo.handyprops.damasceno.pro/public/HandyPropsData.json',
             urlDSList: getHandyPropsDataSource,
         },
         data: [],
@@ -63,12 +64,19 @@ export const defaultState = (() => {
             '0': 'rgba(188,188,188,0.6)',
 
         },
-        colorLabels: (() => {
+        colorLabels: {...(() => {
             let v = {};
             for (let g = 0; g < 15; g++)
                 v[g.toString()] = `Grupo ${g}`;
             return v;
         })(),
+
+            '1': 'Cerâmicos e Vidros',
+            '3': 'Fibras e Particulados',
+            '4': 'Híbridos',
+            '5': 'Polímeros',
+            '6': 'Metais e Ligas',
+    },
 
         defaultProperties: defaultFieldList(),
         customProperties: [],
@@ -126,6 +134,17 @@ const materialFilter = (filters) => {
     });
 };
 
+const translate = m => {
+    let r = traduz.filter(v => v[0] === m.Name);
+    if (r.length) {
+        return {
+            ...m,
+            Name_en: m.Name,
+            Name: r[0][1],
+        }
+    }
+    return m;
+};
 
 // carrega dados das DSs selecionadas
 function* loadData(action) {
@@ -140,13 +159,16 @@ function* loadData(action) {
             materialFilter(filter)
             // ()=>true
         ), data => data);
+        //let datax = data.map(v => translate(v));
+        const datax = data;
         // console.log(['data.length', data.length])
+        // window.data = datax;
         yield put({
             type: act.hpSetState, toSet: {
                 processing: false,
                 loaded: true,
-                dataSize: (data && data.length) || 0,
-                data
+                dataSize: (datax && datax.length) || 0,
+                data: datax,
             }
         });
     } catch (e) {
@@ -374,7 +396,7 @@ const reducerBase = (state = defaultState, action) => {
             let conf = {};
             try {
                 conf = JSON.parse(action.file);
-            } catch (e){
+            } catch (e) {
                 console.log(e);
             }
             console.log(conf);
