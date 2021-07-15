@@ -20,6 +20,7 @@ import {
 import slugify from "slugify";
 import FileSaver from "file-saver";
 import traduz from "./traduz";
+import store2 from "store2";
 
 export const apiActs = {
     list: p => {
@@ -64,19 +65,20 @@ export const defaultState = (() => {
             '0': 'rgba(188,188,188,0.6)',
 
         },
-        colorLabels: {...(() => {
-            let v = {};
-            for (let g = 0; g < 15; g++)
-                v[g.toString()] = `Grupo ${g}`;
-            return v;
-        })(),
+        colorLabels: {
+            ...(() => {
+                let v = {};
+                for (let g = 0; g < 15; g++)
+                    v[g.toString()] = `Grupo ${g}`;
+                return v;
+            })(),
 
             '1': 'Cerâmicos e Vidros',
             '3': 'Fibras e Particulados',
             '4': 'Híbridos',
             '5': 'Polímeros',
             '6': 'Metais e Ligas',
-    },
+        },
 
         defaultProperties: defaultFieldList(),
         customProperties: [],
@@ -205,7 +207,7 @@ function* getDataSource(action) {
             return;
         }
     } catch (e) {
-        yield put({type: "USER_FETCH_FAILED", message: e.message});
+        yield put({type: "USER_FETCH_FAILED1", message: e.message});
         yield put({
             type: act.hpSetState, toSet: {
                 processing: true,
@@ -219,11 +221,19 @@ function* getDataSource(action) {
 // Careerga DS espcífica, via lista de URLs
 function* HP_LOADED(action) {
     try {
-        yield put({
-            type: act.hp.loadData
-        });
+        const ds = yield call(db.countMaterials());
+        if (!ds) {
+            yield put({
+                type: act.hp.getDataSource,
+                url: 'https://demo.handyprops.damasceno.pro/public/HandyPropsData.json',
+            });
+        } else {
+            yield put({
+                type: act.hp.loadData
+            });
+        }
     } catch (e) {
-        yield put({type: "USER_FETCH_FAILED", message: e.message});
+        yield put({type: "USER_FETCH_FAILED2", message: e.message});
         yield put({
             type: act.hpSetState, toSet: {
                 processing: false, data: []

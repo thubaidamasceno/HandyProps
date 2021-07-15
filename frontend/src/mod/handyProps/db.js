@@ -44,6 +44,12 @@ export function listMaterials(filter) {
     };
 }
 
+export function countMaterials() {
+    return (cb) => {
+        return db.table('materials').count()
+            .then(cb);
+    };
+}
 //
 // export function addTodo(title) {
 //     return (dispatch) => {

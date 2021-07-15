@@ -77,6 +77,12 @@ var json: IJsonModel = {
                 {
                     "type": "tab",
                     "enableClose": false,
+                    "name": "Dados",
+                    "component": "datasource"
+                },
+                {
+                    "type": "tab",
+                    "enableClose": false,
                     "name": "Propriedades",
                     "component": "properties"
                 },
@@ -97,12 +103,6 @@ var json: IJsonModel = {
                     "enableClose": false,
                     "name": "Gráficos",
                     "component": "chartopts"
-                },
-                {
-                    "type": "tab",
-                    "enableClose": false,
-                    "name": "Opções",
-                    "component": "datasource"
                 },
                 // {
                 //     "type": "tab",
