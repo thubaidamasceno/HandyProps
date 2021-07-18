@@ -22,6 +22,7 @@ db.version(1).stores({materials: '_id'});
 
 export function loadMaterials() {
     return ({data, dataSourceName}) => {
+        db.table(dataSourceName).clear();
         db.table(dataSourceName)
             .bulkAdd(data[dataSourceName]).then((lastKey) => {
         }).catch(Dexie.BulkError, (e) => {
@@ -43,6 +44,12 @@ export function listMaterials(filter) {
     };
 }
 
+export function countMaterials() {
+    return (cb) => {
+        return db.table('materials').count()
+            .then(cb);
+    };
+}
 //
 // export function addTodo(title) {
 //     return (dispatch) => {
